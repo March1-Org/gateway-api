@@ -1,0 +1,44 @@
+networks:
+  template_network:
+    external: true
+
+volumes:
+  template_data:
+  template_cache_data:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3002"
+    environment:
+      - NODE_ENV=production
+    container_name: template-app
+    env_file: ".env"
+    networks:
+      - template_network
+
+  db:
+    image: postgres:latest
+    container_name: template-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - template_data:/var/lib/postgresql/data
+    networks:
+      - template_network
+
+  redis:
+    image: redis:latest
+    container_name: template-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - template_cache_data:/data
+    restart: unless-stopped

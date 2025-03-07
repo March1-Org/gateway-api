@@ -1,15 +1,36 @@
 {
   "name": "microservice-template",
   "version": "1.0.50",
+  "module": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "postbuild": "rimraf tsconfig.types.tsbuildinfo",
+    "publish:build": "rimraf ./dist && bun run build && bun publish"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@elysiajs/eden": "^1.2.0",
+    "@elysiajs/jwt": "^1.2.0",
+    "drizzle-orm": "^0.40.0",
+    "elysia": "^1.2.24",
+    "pg": "^8.13.3"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.11",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.30.5",
+    "rimraf": "^6.0.1"
   },
-  "module": "src/index.js"
+  "files": [
+    "dist/index.d.ts",
+    "dist/db/index.js",
+    "dist/db/schema/**/*.d.ts"
+  ]
 }
