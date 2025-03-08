@@ -1,21 +1,13 @@
-import { treaty } from "@elysiajs/eden";
-import { Elysia } from "elysia";
-import { db } from "./db";
-import { usersTable } from "./db/schema/users";
+import { db, dbBodies } from "./db";
+import { createApp } from "./createApp";
+import { schema } from "./db/schema";
 
-const app = new Elysia()
-  .get("/", () => "Hello Elysia")
-  .get("/users", async () => {
-    return await db.select().from(usersTable);
-  })
-  .listen(3000);
+const app = createApp({ db, dbBodies, schema }).listen(3000);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
-
-const templateApi = treaty(app);
 type TemplateApp = typeof app;
 
-export { templateApi };
+export { app };
 export type { TemplateApp };

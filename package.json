@@ -18,15 +18,18 @@
     "@elysiajs/eden": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "drizzle-orm": "^0.40.0",
+    "drizzle-typebox": "^0.3.0",
     "elysia": "^1.2.24",
     "pg": "^8.13.3"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "^10.18.0",
     "@types/bun": "^1.2.4",
     "@types/pg": "^8.11.11",
     "bun-types": "latest",
     "drizzle-kit": "^0.30.5",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "testcontainers": "^10.18.0"
   },
   "files": [
     "dist/index.d.ts",
