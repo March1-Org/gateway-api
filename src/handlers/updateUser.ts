@@ -21,5 +21,5 @@ export async function updateUser({
     .set(body)
     .where(eq(usersTable.id, Number(id)));
 
-  return "Successfully updated user";
+  return "Successfully updated user.";
 }

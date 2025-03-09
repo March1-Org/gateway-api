@@ -20,7 +20,7 @@ export async function selectUser({
     .where(eq(usersTable.id, Number(id)));
 
   if (!res.length) {
-    return error("No Content", "User not found.");
+    return error("Not Found", "User not found.");
   }
 
   return res[0];

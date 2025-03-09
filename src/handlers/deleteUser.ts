@@ -15,5 +15,5 @@ export async function deleteUser({
 }: Options) {
   await db.delete(usersTable).where(eq(usersTable.id, Number(id)));
 
-  return "Successfully deleted user";
+  return "Successfully deleted user.";
 }

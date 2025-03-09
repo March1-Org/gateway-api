@@ -14,5 +14,5 @@ export async function insertUser({
   body,
 }: Options) {
   await db.insert(usersTable).values(body);
-  return "Successfully created user";
+  return "Successfully created user.";
 }

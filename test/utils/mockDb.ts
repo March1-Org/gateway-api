@@ -4,9 +4,9 @@ import { Client } from "pg";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 
 export async function getTestDb() {
-  const container = await new PostgreSqlContainer().start();
-
-  console.log("container created");
+  const container = await new PostgreSqlContainer("postgres:latest")
+    .withStartupTimeout(30 * 1000)
+    .start();
 
   const client = new Client({
     host: container.getHost(),
@@ -16,8 +16,6 @@ export async function getTestDb() {
     password: container.getPassword(),
   });
   await client.connect();
-
-  console.log("client connected to container");
 
   const mockDb = drizzle(client);
   await migrate(mockDb, { migrationsFolder: "./drizzle" });
