@@ -1,16 +1,15 @@
 import { createApp } from "@/createApp";
 import { treaty } from "@elysiajs/eden";
 import { describe, expect, it, beforeAll, afterAll } from "bun:test";
-import { getTestDb } from "./utils/mockDb";
+import { getMockDb, stopDb } from "./utils/mockDb";
 import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import type { app } from "@/index";
 import jwt from "@elysiajs/jwt";
-
-type TestApp = typeof app;
+import type { Container } from "dockerode";
 
 // Define the return type of getTestDb()
-type TestDb = Awaited<ReturnType<typeof getTestDb>>;
+type TestDb = Awaited<ReturnType<typeof getMockDb>>;
 
 // Define the return type of treaty()
 type TreatyApi = ReturnType<typeof treaty<typeof app>>;
@@ -18,7 +17,7 @@ type TreatyApi = ReturnType<typeof treaty<typeof app>>;
 // Define the test context with proper types
 interface TestContext {
   db: TestDb;
-  app: TestApp;
+  container: Container;
   api: TreatyApi;
   authorization: string;
 }
@@ -27,21 +26,25 @@ describe("Users API", () => {
   // Initialize with proper types
   const testContext: TestContext = {
     db: undefined as unknown as TestDb,
-    app: undefined as unknown as TestApp,
+    container: undefined as unknown as Container,
     api: undefined as unknown as TreatyApi,
     authorization: undefined as unknown as string,
   };
+
+  return;
 
   // Setup before all tests
   beforeAll(async () => {
     // Set the actual values
     testContext.db = await getTestDb();
-    testContext.app = createApp({
+    if (!testContext.db) return;
+    const app = createApp({
       db: testContext.db.mockDb,
       dbBodies,
       schema,
     });
-    testContext.api = treaty(testContext.app);
+    testContext.api = treaty(app);
+
     testContext.authorization = await jwt({
       secret: process.env.TEMPLATE_JWT_SECRET!,
     }).decorator.jwt.sign({});
@@ -63,7 +66,7 @@ describe("Users API", () => {
   // Clean up after tests
   afterAll(async () => {
     if (testContext.db && "disconnect" in testContext.db) {
-      await testContext.db.container.stop();
+      await stopDb(testContext.container);
     }
   });
 

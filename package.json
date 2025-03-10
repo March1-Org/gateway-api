@@ -5,14 +5,14 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo",
-    "publish:build": "rimraf ./dist && bun run build && bun publish"
+    "publish:build": "rimraf ./dist && bun run build && bun publish",
+    "test:integrated": "bun run ./test/setup.ts && bun test && bun run ./test/teardown.ts"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
@@ -27,6 +27,7 @@
     "@types/bun": "^1.2.4",
     "@types/pg": "^8.11.11",
     "bun-types": "latest",
+    "dockerode": "^4.0.4",
     "drizzle-kit": "^0.30.5",
     "rimraf": "^6.0.1",
     "testcontainers": "^10.18.0"
