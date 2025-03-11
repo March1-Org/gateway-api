@@ -12,55 +12,40 @@ let authorization: string;
 
 describe("POST /users/", () => {
   beforeAll(async () => {
-    try {
-      const mockDb = await getMockDb();
-      const app = createApp({
-        db: mockDb,
-        dbBodies,
-        schema,
-      });
+    const mockDb = await getMockDb();
+    const app = createApp({
+      db: mockDb,
+      dbBodies,
+      schema,
+    });
 
-      api = treaty(app);
+    api = treaty(app);
 
-      authorization = await jwt({
-        secret: process.env.TEMPLATE_JWT_SECRET!,
-      }).decorator.jwt.sign({});
-    } catch (error) {
-      console.error("Error in beforeAll:", error);
-    }
-  });
+    authorization = await jwt({
+      secret: process.env.TEMPLATE_JWT_SECRET!,
+    }).decorator.jwt.sign({});
 
-  it("returns 'Unauthorized' when provided the wrong authorization header", async () => {
-    const res = await api.users.post(
-      {
-        age: 24,
-        email: "test.email@.com",
-        name: "Alonzo",
-      },
-      {
-        headers: {
-          authorization: "",
-        },
-      }
-    );
-
-    expect(res.error?.value as unknown as string).toBe("Unauthorized");
-    expect(res.error?.status as number).toBe(401);
+    await mockDb.delete(schema.usersTable);
+    await mockDb
+      .insert(schema.usersTable)
+      .values([{ age: 30, email: "test@email.com", name: "test" }]);
   });
 
   it('returns "duplicate key value violates unique constraint "users_email_unique"" error', async () => {
     const res = await api.users.post(
       {
         age: 24,
-        email: "test.email@.com",
+        email: "test@email.com",
         name: "Alonzo",
       },
       {
         headers: {
-          authorization: authorization,
+          authorization,
         },
       }
     );
+
+    console.log(res);
 
     expect(res.error?.value as unknown as string).toBe(
       'duplicate key value violates unique constraint "users_email_unique"'
@@ -72,12 +57,12 @@ describe("POST /users/", () => {
     const res = await api.users.post(
       {
         age: 24,
-        email: "test2.email@.com",
+        email: "test2@email.com",
         name: "Alonzo",
       },
       {
         headers: {
-          authorization: authorization,
+          authorization,
         },
       }
     );

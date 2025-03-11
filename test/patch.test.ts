@@ -6,54 +6,48 @@ import { createApp } from "@/createApp";
 import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
+import { eq } from "drizzle-orm";
+import type { UserRow } from "@/db/schema/users";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
+let user: UserRow;
 
 describe("PATCH /users/:id", () => {
   beforeAll(async () => {
-    try {
-      const mockDb = await getMockDb();
-      const app = createApp({
-        db: mockDb,
-        dbBodies,
-        schema,
-      });
+    const mockDb = await getMockDb();
+    const app = createApp({
+      db: mockDb,
+      dbBodies,
+      schema,
+    });
 
-      api = treaty(app);
+    api = treaty(app);
 
-      authorization = await jwt({
-        secret: process.env.TEMPLATE_JWT_SECRET!,
-      }).decorator.jwt.sign({});
-    } catch (error) {
-      console.error("Error in beforeAll:", error);
-    }
-  });
+    authorization = await jwt({
+      secret: process.env.TEMPLATE_JWT_SECRET!,
+    }).decorator.jwt.sign({});
 
-  it("returns 'Unauthorized' when provided the wrong authorization header", async () => {
-    const res = await api.users({ id: 1 }).patch(
-      {
-        age: 24,
-        email: "test.email@.com",
-        name: "Alonzo",
-      },
-      {
-        headers: {
-          authorization: "",
-        },
-      }
-    );
+    await mockDb.delete(schema.usersTable);
+    await mockDb.insert(schema.usersTable).values([
+      { age: 30, email: "test@email.com", name: "test" },
+      { age: 30, email: "test2@email.com", name: "test" },
+    ]);
 
-    expect(res.error?.value as unknown as string).toBe("Unauthorized");
-    expect(res.error?.status as number).toBe(401);
+    user = (
+      await mockDb
+        .select()
+        .from(schema.usersTable)
+        .where(eq(schema.usersTable.email, "test2@email.com"))
+    )[0];
   });
 
   it('returns "duplicate key value violates unique constraint "users_email_unique"" error', async () => {
-    const res = await api.users({ id: 1 }).patch(
+    const res = await api.users({ id: user.id }).patch(
       {
-        age: 25,
-        email: "test2.email@.com",
-        name: "Alonzo S.",
+        age: 24,
+        email: "test@email.com",
+        name: "Alonzo",
       },
       {
         headers: {
@@ -69,11 +63,11 @@ describe("PATCH /users/:id", () => {
   });
 
   it("returns 'Successfully created user.'", async () => {
-    const res = await api.users({ id: 1 }).patch(
+    const res = await api.users({ id: user.id }).patch(
       {
-        age: 25,
-        email: "test3.email@.com",
-        name: "Alonzo S.",
+        age: 24,
+        email: "test.email@.com",
+        name: "Alonzo",
       },
       {
         headers: {

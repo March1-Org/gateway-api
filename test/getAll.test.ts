@@ -1,18 +1,16 @@
-import type { app } from "@/index";
-import { treaty } from "@elysiajs/eden";
 import { describe, it, expect, beforeAll } from "bun:test";
+import { treaty } from "@elysiajs/eden";
+import type { app } from "@/index";
 import { getMockDb } from "./utils/getMockDb";
 import { createApp } from "@/createApp";
 import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
-import type { UserRow } from "@/db/schema/users";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
-let user: UserRow;
 
-describe("DELETE /users/:id", () => {
+describe("GET /users/:id", () => {
   beforeAll(async () => {
     const mockDb = await getMockDb();
     const app = createApp({
@@ -28,24 +26,21 @@ describe("DELETE /users/:id", () => {
     }).decorator.jwt.sign({});
 
     await mockDb.delete(schema.usersTable);
-    await mockDb
-      .insert(schema.usersTable)
-      .values({ age: 30, email: "test@email.com", name: "test" });
-
-    user = (await mockDb.select().from(schema.usersTable))[0];
+    await mockDb.insert(schema.usersTable).values([
+      { age: 30, email: "test@email.com", name: "test" },
+      { age: 30, email: "test2@email.com", name: "test" },
+      { age: 30, email: "test3@email.com", name: "test" },
+    ]);
   });
 
-  it("returns 'Successfully deleted user.'", async () => {
-    const res = await api.users({ id: user.id }).delete(
-      {},
-      {
-        headers: {
-          authorization,
-        },
-      }
-    );
+  it("returns an array of user rows", async () => {
+    const res = await api.users.get({
+      headers: {
+        authorization,
+      },
+    });
 
-    expect(res.data).toBe("Successfully deleted user.");
+    expect(res.data).toBeArrayOfSize(3);
     expect(res.status).toBe(200);
   });
 });

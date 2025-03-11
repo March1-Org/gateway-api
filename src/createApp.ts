@@ -7,6 +7,7 @@ import { deleteUser } from "./handlers/deleteUser";
 import type { Schema } from "./db/schema";
 import jwt from "@elysiajs/jwt";
 import { checkAuthorization } from "./handlers/checkAuthorization";
+import { selectAllUsers } from "./handlers/selectAllUsers";
 
 type Options = {
   db: DbType;
@@ -26,6 +27,7 @@ export const createApp = ({ db, dbBodies, schema }: Options) => {
       })
     )
     .onBeforeHandle((options) => checkAuthorization(options))
+    .get("/users", (options) => selectAllUsers(options))
     .get("/users/:id", (options) => selectUser(options))
     .post("/users", (options) => insertUser(options), {
       body: t.Object(dbBodies.insert.usersTable),
