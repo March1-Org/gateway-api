@@ -1,11 +1,35 @@
 import { describe, it, expect } from "bun:test";
-import { testContext } from "./utils/testContext";
+import { getTestContext } from "./utils/getTestContext";
+
+const context = JSON.parse(
+  await Bun.file("./test/context/context.json").text()
+);
+
+console.log("creating test context");
+const api = await getTestContext({
+  containerId: context.containerId,
+});
+console.log("context created");
 
 describe("GET /users/:id", () => {
+  // let api: ReturnType<typeof treaty<typeof app>>;
+
+  // beforeAll(async () => {
+  //   const context = JSON.parse(
+  //     await Bun.file("./test/context/context.json").text()
+  //   );
+
+  //   console.log("creating test context");
+  //   api = await getTestContext({
+  //     containerId: context.containerId,
+  //   });
+  //   console.log("context created");
+  // });
+
   it("returns 'Unauthorized' when provided the wrong authorization header", async () => {
     const userId = 1;
 
-    const res = await testContext!.api.users({ id: userId }).get({
+    const res = await api.users({ id: userId }).get({
       headers: {
         authorization: "",
       },
@@ -18,9 +42,9 @@ describe("GET /users/:id", () => {
   it("returns 'User not found' error when user doesn't exist", async () => {
     const userId = 2;
 
-    const res = await testContext!.api.users({ id: userId }).get({
+    const res = await api.users({ id: userId }).get({
       headers: {
-        authorization: testContext!.authorization,
+        authorization: "",
       },
     });
 
@@ -31,9 +55,9 @@ describe("GET /users/:id", () => {
   it("returns user row", async () => {
     const userId = 1;
 
-    const res = await testContext!.api.users({ id: userId }).get({
+    const res = await api.users({ id: userId }).get({
       headers: {
-        authorization: testContext!.authorization,
+        authorization: "",
       },
     });
 
