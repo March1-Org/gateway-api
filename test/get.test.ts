@@ -1,32 +1,40 @@
-import { describe, it, expect } from "bun:test";
-import { getTestContext } from "./utils/getTestContext";
+import { describe, it, expect, beforeAll } from "bun:test";
+import { treaty } from "@elysiajs/eden";
+import type { app } from "@/index";
+import { getMockDb } from "./utils/getMockDb";
+import { createApp } from "@/createApp";
+import { dbBodies } from "@/db";
+import { schema } from "@/db/schema";
+import jwt from "@elysiajs/jwt";
 
-const context = JSON.parse(
-  await Bun.file("./test/context/context.json").text()
-);
+let api: ReturnType<typeof treaty<typeof app>>;
+let authorization: string;
 
-console.log("creating test context");
-const api = await getTestContext({
-  containerId: context.containerId,
+beforeAll(async () => {
+  try {
+    const mockDb = await getMockDb();
+    const app = createApp({
+      db: mockDb,
+      dbBodies,
+      schema,
+    });
+
+    api = treaty(app);
+
+    authorization = await jwt({
+      secret: process.env.TEMPLATE_JWT_SECRET!,
+    }).decorator.jwt.sign({});
+  } catch (error) {
+    console.error("Error in beforeAll:", error);
+  }
 });
-console.log("context created");
 
 describe("GET /users/:id", () => {
-  // let api: ReturnType<typeof treaty<typeof app>>;
-
-  // beforeAll(async () => {
-  //   const context = JSON.parse(
-  //     await Bun.file("./test/context/context.json").text()
-  //   );
-
-  //   console.log("creating test context");
-  //   api = await getTestContext({
-  //     containerId: context.containerId,
-  //   });
-  //   console.log("context created");
-  // });
-
   it("returns 'Unauthorized' when provided the wrong authorization header", async () => {
+    if (!api) {
+      throw new Error("api is not defined");
+    }
+
     const userId = 1;
 
     const res = await api.users({ id: userId }).get({
@@ -40,11 +48,15 @@ describe("GET /users/:id", () => {
   });
 
   it("returns 'User not found' error when user doesn't exist", async () => {
+    if (!api) {
+      throw new Error("api is not defined");
+    }
+
     const userId = 2;
 
     const res = await api.users({ id: userId }).get({
       headers: {
-        authorization: "",
+        authorization,
       },
     });
 
@@ -53,11 +65,15 @@ describe("GET /users/:id", () => {
   });
 
   it("returns user row", async () => {
+    if (!api) {
+      throw new Error("api is not defined");
+    }
+
     const userId = 1;
 
     const res = await api.users({ id: userId }).get({
       headers: {
-        authorization: "",
+        authorization,
       },
     });
 

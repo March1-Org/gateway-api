@@ -1,5 +1,10 @@
-import { teardownTestContext } from "./utils/testContext";
+import { dockerode } from "./utils/dockerode";
 
-export default async function globalTeardown() {
-  await teardownTestContext();
-}
+const context = JSON.parse(
+  await Bun.file("./test/context/context.json").text()
+);
+
+const container = dockerode.getContainer(context.containerId);
+
+await container.stop();
+await container.remove();

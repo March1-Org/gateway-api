@@ -1,13 +1,7 @@
 import { Client } from "pg";
-import { dockerode } from "./dockerode";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
 
-type Options = {
-  containerId: string;
-};
-
-export async function getMockDb({ containerId }: Options) {
+export async function getMockDb() {
   //   const containerInfo = await dockerode.getContainer(containerId).inspect();
   //   const host = "127.0.0.1";
 
@@ -21,7 +15,6 @@ export async function getMockDb({ containerId }: Options) {
   await client.connect();
 
   const mockDb = drizzle(client);
-  await migrate(mockDb, { migrationsFolder: "./drizzle" });
 
   return mockDb;
 }

@@ -4,12 +4,8 @@ import { schema } from "@/db/schema";
 import { dbBodies } from "@/db";
 import { treaty } from "@elysiajs/eden";
 
-type Options = {
-  containerId: string;
-};
-
-export async function getTestContext({ containerId }: Options) {
-  const mockDb = await getMockDb({ containerId });
+export async function getTestApi() {
+  const mockDb = await getMockDb();
   console.log("db created");
   const app = createApp({
     db: mockDb,
@@ -21,6 +17,6 @@ export async function getTestContext({ containerId }: Options) {
 
   const api = treaty(app);
   console.log("api created");
-
+  console.log(await api.users({ id: 1 }).get());
   return api;
 }
