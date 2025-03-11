@@ -10,26 +10,26 @@ import jwt from "@elysiajs/jwt";
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
 
-beforeAll(async () => {
-  try {
-    const mockDb = await getMockDb();
-    const app = createApp({
-      db: mockDb,
-      dbBodies,
-      schema,
-    });
-
-    api = treaty(app);
-
-    authorization = await jwt({
-      secret: process.env.TEMPLATE_JWT_SECRET!,
-    }).decorator.jwt.sign({});
-  } catch (error) {
-    console.error("Error in beforeAll:", error);
-  }
-});
-
 describe("GET /users/:id", () => {
+  beforeAll(async () => {
+    try {
+      const mockDb = await getMockDb();
+      const app = createApp({
+        db: mockDb,
+        dbBodies,
+        schema,
+      });
+
+      api = treaty(app);
+
+      authorization = await jwt({
+        secret: process.env.TEMPLATE_JWT_SECRET!,
+      }).decorator.jwt.sign({});
+    } catch (error) {
+      console.error("Error in beforeAll:", error);
+    }
+  });
+
   it("returns 'Unauthorized' when provided the wrong authorization header", async () => {
     if (!api) {
       throw new Error("api is not defined");
