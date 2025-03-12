@@ -15,26 +15,26 @@ type Options = {
   db: DbType;
   schema: Schema;
   query: SelectUsersQueryType;
-  redis: Redis;
+  cache: Redis;
 };
 
 export async function selectUsers({
   db,
   schema: { usersTable },
   query: { page = 1, limit = 10 },
-  redis,
+  cache,
 }: Options) {
   const cacheKey = `users:page:${page}:limit:${limit}`;
   const offset = (page - 1) * limit;
 
-  const cachedResult = await redis.get(cacheKey);
+  const cachedResult = await cache.get(cacheKey);
   if (cachedResult) {
     return JSON.parse(cachedResult);
   }
 
   const data = await db.select().from(usersTable).limit(limit).offset(offset);
 
-  await redis.set(cacheKey, JSON.stringify(data), "EX", 3600);
+  await cache.set(cacheKey, JSON.stringify(data), "EX", 3600);
 
   return data;
 }

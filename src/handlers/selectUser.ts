@@ -9,18 +9,18 @@ type Options = {
   db: DbType;
   schema: Schema;
   params: { id: string };
-  redis: Redis;
+  cache: Redis;
 };
 
 export async function selectUser({
   db,
   schema: { usersTable },
   params: { id },
-  redis,
+  cache,
 }: Options) {
   const cacheKey = `user:${id}`;
 
-  const cachedUser = await redis.get(cacheKey);
+  const cachedUser = await cache.get(cacheKey);
 
   if (cachedUser) {
     return JSON.parse(cachedUser) as UserRow;
@@ -37,7 +37,7 @@ export async function selectUser({
 
   const user = data[0];
 
-  await redis.set(cacheKey, JSON.stringify(user), "EX", 3600);
+  await cache.set(cacheKey, JSON.stringify(user), "EX", 3600);
 
   return user;
 }

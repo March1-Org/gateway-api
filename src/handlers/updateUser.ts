@@ -9,7 +9,7 @@ type Options = {
   schema: Schema;
   params: { id: string };
   body: UserUpdate;
-  redis: Redis;
+  cache: Redis;
 };
 
 export async function updateUser({
@@ -17,7 +17,7 @@ export async function updateUser({
   schema: { usersTable },
   params: { id },
   body,
-  redis,
+  cache,
 }: Options) {
   await db
     .update(usersTable)
@@ -26,7 +26,7 @@ export async function updateUser({
 
   const cacheKey = `user:${id}`;
 
-  await redis.del(cacheKey);
+  await cache.del(cacheKey);
 
   return "Successfully updated user.";
 }

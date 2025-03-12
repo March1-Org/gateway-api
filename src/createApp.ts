@@ -14,15 +14,15 @@ type Options = {
   db: DbType;
   dbBodies: DbBodies;
   schema: Schema;
-  redis: Redis;
+  cache: Redis;
 };
 
-export const createApp = ({ db, dbBodies, schema, redis }: Options) => {
+export const createApp = ({ db, dbBodies, schema, cache }: Options) => {
   return new Elysia()
     .decorate("db", db)
     .decorate("dbBodies", dbBodies)
     .decorate("schema", schema)
-    .decorate("redis", redis)
+    .decorate("cache", cache)
     .use(
       jwt({
         name: "templateJwt",

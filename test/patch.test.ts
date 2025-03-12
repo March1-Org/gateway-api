@@ -8,7 +8,7 @@ import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
 import { eq } from "drizzle-orm";
 import type { UserRow } from "@/db/schema/users";
-import { redis } from "@/db/cache";
+import { getMockCache } from "./utils/getMockCache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
@@ -17,11 +17,12 @@ let user: UserRow;
 describe("PATCH /users/:id", () => {
   beforeAll(async () => {
     const mockDb = await getMockDb();
+    const mockCache = await getMockCache();
     const app = createApp({
       db: mockDb,
       dbBodies,
       schema,
-      redis,
+      cache: mockCache,
     });
 
     api = treaty(app);

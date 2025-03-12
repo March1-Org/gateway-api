@@ -3,6 +3,7 @@ import { Client } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { dockerode } from "./utils/dockerode";
+import { launchMockCache } from "./utils/launchMockCache";
 
 const client = new Client({
   host: "127.0.0.1",
@@ -13,11 +14,13 @@ const client = new Client({
 });
 
 async function setup() {
-  const container = await launchMockDb();
+  const dbContainer = await launchMockDb();
+  const cacheContainer = await launchMockCache();
   await Bun.write(
     "./test/context/context.json",
     JSON.stringify({
-      containerId: container.id,
+      dbContainerId: dbContainer.id,
+      cacheContainerId: cacheContainer.id,
     })
   );
 
@@ -34,10 +37,13 @@ async function teardown() {
     await Bun.file("./test/context/context.json").text()
   );
 
-  const container = dockerode.getContainer(context.containerId);
+  const dbContainer = dockerode.getContainer(context.dbContainerId);
+  const cacheContainer = dockerode.getContainer(context.cacheContainerId);
   await client.end();
-  await container.stop();
-  await container.remove();
+  await dbContainer.stop();
+  await dbContainer.remove();
+  await cacheContainer.stop();
+  await cacheContainer.remove();
 }
 
 async function runTests() {

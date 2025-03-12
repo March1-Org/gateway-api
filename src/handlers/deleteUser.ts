@@ -7,20 +7,20 @@ type Options = {
   db: DbType;
   schema: Schema;
   params: { id: string };
-  redis: Redis;
+  cache: Redis;
 };
 
 export async function deleteUser({
   db,
   schema: { usersTable },
   params: { id },
-  redis,
+  cache,
 }: Options) {
   await db.delete(usersTable).where(eq(usersTable.id, Number(id)));
 
   const cacheKey = `user:${id}`;
 
-  await redis.del(cacheKey);
+  await cache.del(cacheKey);
 
   return "Successfully deleted user.";
 }
