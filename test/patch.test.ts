@@ -8,6 +8,7 @@ import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
 import { eq } from "drizzle-orm";
 import type { UserRow } from "@/db/schema/users";
+import { redis } from "@/db/cache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
@@ -20,6 +21,7 @@ describe("PATCH /users/:id", () => {
       db: mockDb,
       dbBodies,
       schema,
+      redis,
     });
 
     api = treaty(app);

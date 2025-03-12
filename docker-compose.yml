@@ -38,7 +38,10 @@ services:
     image: redis:latest
     container_name: template-cache
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     volumes:
       - template_cache_data:/data
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DB=${REDIS_DB}
     restart: unless-stopped

@@ -7,6 +7,7 @@ import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
 import type { UserRow } from "@/db/schema/users";
+import { redis } from "@/db/cache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
@@ -19,6 +20,7 @@ describe("DELETE /users/:id", () => {
       db: mockDb,
       dbBodies,
       schema,
+      redis,
     });
 
     api = treaty(app);

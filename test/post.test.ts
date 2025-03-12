@@ -6,6 +6,7 @@ import { createApp } from "@/createApp";
 import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
+import { redis } from "@/db/cache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
@@ -17,6 +18,7 @@ describe("POST /users/", () => {
       db: mockDb,
       dbBodies,
       schema,
+      redis,
     });
 
     api = treaty(app);

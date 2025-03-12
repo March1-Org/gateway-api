@@ -7,19 +7,22 @@ import { deleteUser } from "./handlers/deleteUser";
 import type { Schema } from "./db/schema";
 import jwt from "@elysiajs/jwt";
 import { checkAuthorization } from "./handlers/checkAuthorization";
-import { selectAllUsers } from "./handlers/selectAllUsers";
+import { selectUsers, selectUsersQuery } from "./handlers/selectUsers";
+import type Redis from "ioredis";
 
 type Options = {
   db: DbType;
   dbBodies: DbBodies;
   schema: Schema;
+  redis: Redis;
 };
 
-export const createApp = ({ db, dbBodies, schema }: Options) => {
+export const createApp = ({ db, dbBodies, schema, redis }: Options) => {
   return new Elysia()
     .decorate("db", db)
     .decorate("dbBodies", dbBodies)
     .decorate("schema", schema)
+    .decorate("redis", redis)
     .use(
       jwt({
         name: "templateJwt",
@@ -27,7 +30,9 @@ export const createApp = ({ db, dbBodies, schema }: Options) => {
       })
     )
     .onBeforeHandle((options) => checkAuthorization(options))
-    .get("/users", (options) => selectAllUsers(options))
+    .get("/users", (options) => selectUsers(options), {
+      query: selectUsersQuery,
+    })
     .get("/users/:id", (options) => selectUser(options))
     .post("/users", (options) => insertUser(options), {
       body: t.Object(dbBodies.insert.usersTable),

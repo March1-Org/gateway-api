@@ -1,27 +1,43 @@
 import type { DbType } from "@/db";
 import type { Schema } from "@/db/schema";
+import type { UserRow } from "@/db/schema/users";
 import { eq } from "drizzle-orm";
 import { error } from "elysia";
+import type Redis from "ioredis";
 
 type Options = {
   db: DbType;
   schema: Schema;
   params: { id: string };
+  redis: Redis;
 };
 
 export async function selectUser({
   db,
   schema: { usersTable },
   params: { id },
+  redis,
 }: Options) {
-  const res = await db
+  const cacheKey = `user:${id}`;
+
+  const cachedUser = await redis.get(cacheKey);
+
+  if (cachedUser) {
+    return JSON.parse(cachedUser) as UserRow;
+  }
+
+  const data = await db
     .select()
     .from(usersTable)
     .where(eq(usersTable.id, Number(id)));
 
-  if (!res.length) {
+  if (!data.length) {
     return error("Not Found", "User not found.");
   }
 
-  return res[0];
+  const user = data[0];
+
+  await redis.set(cacheKey, JSON.stringify(user), "EX", 3600);
+
+  return user;
 }

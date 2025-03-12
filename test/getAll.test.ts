@@ -6,17 +6,19 @@ import { createApp } from "@/createApp";
 import { dbBodies } from "@/db";
 import { schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
+import { redis } from "@/db/cache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
 
-describe("GET /users/:id", () => {
+describe("GET /users", () => {
   beforeAll(async () => {
     const mockDb = await getMockDb();
     const app = createApp({
       db: mockDb,
       dbBodies,
       schema,
+      redis,
     });
 
     api = treaty(app);
@@ -35,6 +37,7 @@ describe("GET /users/:id", () => {
 
   it("returns an array of user rows", async () => {
     const res = await api.users.get({
+      query: {},
       headers: {
         authorization,
       },
