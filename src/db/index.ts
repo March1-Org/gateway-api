@@ -1,4 +1,4 @@
-import { spreads } from "@/utils/spread";
+import { spreads } from "../utils/spread";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { schema } from "./schema";
 

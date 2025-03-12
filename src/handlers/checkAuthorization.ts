@@ -1,4 +1,4 @@
-import type { JwtType } from "@/utils/types/jwt";
+import type { JwtType } from "../utils/types/jwt";
 import { error } from "elysia";
 
 type Options = {

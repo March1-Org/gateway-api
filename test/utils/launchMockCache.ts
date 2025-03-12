@@ -2,10 +2,10 @@ import { dockerode } from "./dockerode";
 
 export async function launchMockCache() {
   const container = await dockerode.createContainer({
-    Image: "redis:latest",
+    Image: "bitnami/redis:latest",
     Env: [
       `REDIS_PASSWORD=${process.env.REDIS_PASSWORD}`,
-      `REDIS_DB=${process.env.REDIS_DB}`,
+      `REDIS_DATABASE=${process.env.REDIS_DATABASE}`,
     ],
     ExposedPorts: { "6379/tcp": {} },
     HostConfig: {
