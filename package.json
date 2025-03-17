@@ -1,5 +1,5 @@
 {
-  "name": "microservice-template",
+  "name": "march1-microservice-template",
   "version": "1.0.50",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",
