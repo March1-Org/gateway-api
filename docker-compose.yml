@@ -34,9 +34,8 @@ services:
     networks:
       - template_network
 
-  redis:
+  cache:
     image: bitnami/redis:latest
-    command: redis-server --requirepass ${REDIS_PASSWORD}
     container_name: template-cache
     ports:
       - "${REDIS_PORT}:6379"

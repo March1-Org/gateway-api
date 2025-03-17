@@ -11,31 +11,31 @@ import { getMockCache } from "./utils/getMockCache";
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
 
-describe("GET /users", () => {
-  beforeAll(async () => {
-    const mockDb = await getMockDb();
-    const mockCache = await getMockCache();
-    const app = createApp({
-      db: mockDb,
-      dbBodies,
-      schema,
-      cache: mockCache,
-    });
-
-    api = treaty(app);
-
-    authorization = await jwt({
-      secret: process.env.TEMPLATE_JWT_SECRET!,
-    }).decorator.jwt.sign({});
-
-    await mockDb.delete(schema.usersTable);
-    await mockDb.insert(schema.usersTable).values([
-      { age: 30, email: "test@email.com", name: "test" },
-      { age: 30, email: "test2@email.com", name: "test" },
-      { age: 30, email: "test3@email.com", name: "test" },
-    ]);
+beforeAll(async () => {
+  const mockDb = await getMockDb();
+  const mockCache = await getMockCache();
+  const app = createApp({
+    db: mockDb,
+    dbBodies,
+    schema,
+    cache: mockCache,
   });
 
+  api = treaty(app);
+
+  authorization = await jwt({
+    secret: process.env.TEMPLATE_JWT_SECRET!,
+  }).decorator.jwt.sign({});
+
+  await mockDb.delete(schema.usersTable);
+  await mockDb.insert(schema.usersTable).values([
+    { age: 30, email: "test@email.com", name: "test" },
+    { age: 30, email: "test2@email.com", name: "test" },
+    { age: 30, email: "test3@email.com", name: "test" },
+  ]);
+});
+
+describe("GET /users", () => {
   it("returns an array of user rows", async () => {
     const res = await api.users.get({
       query: {},

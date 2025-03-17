@@ -13,31 +13,31 @@ let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
 let user: UserRow;
 
-describe("DELETE /users/:id", () => {
-  beforeAll(async () => {
-    const mockDb = await getMockDb();
-    const mockCache = await getMockCache();
-    const app = createApp({
-      db: mockDb,
-      dbBodies,
-      schema,
-      cache: mockCache,
-    });
-
-    api = treaty(app);
-
-    authorization = await jwt({
-      secret: process.env.TEMPLATE_JWT_SECRET!,
-    }).decorator.jwt.sign({});
-
-    await mockDb.delete(schema.usersTable);
-    await mockDb
-      .insert(schema.usersTable)
-      .values({ age: 30, email: "test@email.com", name: "test" });
-
-    user = (await mockDb.select().from(schema.usersTable))[0];
+beforeAll(async () => {
+  const mockDb = await getMockDb();
+  const mockCache = await getMockCache();
+  const app = createApp({
+    db: mockDb,
+    dbBodies,
+    schema,
+    cache: mockCache,
   });
 
+  api = treaty(app);
+
+  authorization = await jwt({
+    secret: process.env.TEMPLATE_JWT_SECRET!,
+  }).decorator.jwt.sign({});
+
+  await mockDb.delete(schema.usersTable);
+  await mockDb
+    .insert(schema.usersTable)
+    .values({ age: 30, email: "test@email.com", name: "test" });
+
+  user = (await mockDb.select().from(schema.usersTable))[0];
+});
+
+describe("DELETE /users/:id", () => {
   it("returns 'Successfully deleted user.'", async () => {
     const res = await api.users({ id: user.id }).delete(
       {},

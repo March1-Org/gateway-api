@@ -9,20 +9,21 @@ import { getMockCache } from "./utils/getMockCache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 
-describe("Authorization Checks", () => {
-  beforeAll(async () => {
-    const mockDb = await getMockDb();
-    const mockCache = await getMockCache();
-    const app = createApp({
-      db: mockDb,
-      dbBodies,
-      schema,
-      cache: mockCache,
-    });
+beforeAll(async () => {
+  const mockDb = await getMockDb();
+  const mockCache = await getMockCache();
 
-    api = treaty(app);
+  const app = createApp({
+    db: mockDb,
+    dbBodies,
+    schema,
+    cache: mockCache,
   });
 
+  api = treaty(app);
+});
+
+describe("Authorization Checks", () => {
   it("returns 'Unauthorized' when provided the no authorization header", async () => {
     const res = await api.users.get({ query: {} });
 
