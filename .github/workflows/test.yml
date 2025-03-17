@@ -1,0 +1,39 @@
+name: Run Tests on Pull Request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo docker --version
+
+      - name: Set up environment variables
+        run: |
+          echo "POSTGRES_USER=template_db_user" > .env
+          echo "POSTGRES_PASSWORD=template_db_pass" >> .env
+          echo "POSTGRES_DB=template_db" >> .env
+          echo "POSTGRES_PORT=5432" >> .env
+          echo "REDIS_URL=localhost" >> .env
+          echo "REDIS_PORT=6379" >> .env
+          echo "REDIS_PASSWORD=your_secure_password" >> .env
+          echo "REDIS_DATABASE=0" >> .env
+
+      - name: Make test.sh executable
+        run: chmod +x ./test/test.sh
+
+      - name: Install Packages
+        run: bun install
+
+      - name: Run tests
+        run: ./test/test.sh
