@@ -48,8 +48,6 @@ describe("POST /users/", () => {
       }
     );
 
-    console.log(res);
-
     expect(res.error?.value as unknown as string).toBe(
       'duplicate key value violates unique constraint "users_email_unique"'
     );

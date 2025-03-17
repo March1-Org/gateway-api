@@ -8,12 +8,20 @@ else
   exit 1
 fi
 
+# Generate init.sql from the template
+.test/utils/generate-init.sh
+
+# Create Docker volume for PostgreSQL data
+docker volume create postgres_data
+
 # Start the PostgreSQL container
 DB_CONTAINER_ID=$(docker run -d \
   -e POSTGRES_USER="$POSTGRES_USER" \
   -e POSTGRES_PASSWORD="$POSTGRES_PASSWORD" \
   -e POSTGRES_DB="$POSTGRES_DB" \
-  -p $POSTGRES_PORT:5432 \
+  -p 5432:5432 \
+  -v postgres_data:/var/lib/postgresql/data \
+  -v $(pwd)/init.sql:/docker-entrypoint-initdb.d/init.sql \
   postgres:latest)
 
 if [ -z "$DB_CONTAINER_ID" ]; then
