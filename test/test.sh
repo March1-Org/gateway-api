@@ -29,7 +29,7 @@ if [ -z "$DB_CONTAINER_ID" ]; then
   exit 1
 fi
 
-echo $DB_CONTAINER_ID
+
 
 # Start the Redis container
 CACHE_CONTAINER_ID=$(docker run -d \
@@ -54,6 +54,7 @@ for i in {1..30}; do
   sleep 1
 done
 
+docker logs $DB_CONTAINER_ID
 
 # Migrate SQL files from ./drizzle folder
 echo "Migrating SQL files from ./drizzle folder..."
