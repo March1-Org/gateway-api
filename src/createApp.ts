@@ -9,7 +9,6 @@ import jwt from "@elysiajs/jwt";
 import { checkAuthorization } from "./handlers/checkAuthorization";
 import { selectUsers, selectUsersQuery } from "./handlers/selectUsers";
 import type Redis from "ioredis";
-import swagger from "@elysiajs/swagger";
 
 type Options = {
   db: DbType;
@@ -20,7 +19,6 @@ type Options = {
 
 export const createApp = ({ db, dbBodies, schema, cache }: Options) => {
   return new Elysia()
-    .use(swagger())
     .decorate("db", db)
     .decorate("dbBodies", dbBodies)
     .decorate("schema", schema)
