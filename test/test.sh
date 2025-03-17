@@ -33,7 +33,6 @@ fi
 CACHE_CONTAINER_ID=$(docker run -d \
   -e REDIS_PASSWORD="$REDIS_PASSWORD" \
   -p 6379:6379 \
-  --network test-network \
   bitnami/redis:latest)
 
 if [ -z "$CACHE_CONTAINER_ID" ]; then
