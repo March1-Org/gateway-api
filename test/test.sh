@@ -29,6 +29,8 @@ if [ -z "$DB_CONTAINER_ID" ]; then
   exit 1
 fi
 
+echo $DB_CONTAINER_ID
+
 # Start the Redis container
 CACHE_CONTAINER_ID=$(docker run -d \
   -e REDIS_PASSWORD="$REDIS_PASSWORD" \
@@ -39,6 +41,8 @@ if [ -z "$CACHE_CONTAINER_ID" ]; then
   echo "Failed to start the cache container."
   exit 1
 fi
+
+echo $CACHE_CONTAINER_ID
 
 # Wait for the database to start
 echo "Waiting for the database to start..."
