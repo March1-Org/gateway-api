@@ -26,6 +26,7 @@ jobs:
           echo "REDIS_PORT=6379" >> .env
           echo "REDIS_PASSWORD=your_secure_password" >> .env
           echo "REDIS_DATABASE=0" >> .env
+          echo "TEMPLATE_JWT_SECRET=template-jwt-secret" >> .env
 
       - name: Make test.sh executable
         run: chmod +x ./test/test.sh
