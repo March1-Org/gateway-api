@@ -8,9 +8,6 @@ else
   exit 1
 fi
 
-# Generate init.sql from the template
-./test/utils/generate-init.sh
-
 # Create Docker volume for PostgreSQL data
 docker volume create postgres_data
 
@@ -21,15 +18,12 @@ DB_CONTAINER_ID=$(docker run -d \
   -e POSTGRES_DB="$POSTGRES_DB" \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql/data \
-  -v $(pwd)/init.sql:/docker-entrypoint-initdb.d/init.sql \
   postgres:latest)
 
 if [ -z "$DB_CONTAINER_ID" ]; then
   echo "Failed to start the database container."
   exit 1
 fi
-
-docker logs $DB_CONTAINER_ID
 
 # Start the Redis container
 CACHE_CONTAINER_ID=$(docker run -d \
@@ -41,8 +35,6 @@ if [ -z "$CACHE_CONTAINER_ID" ]; then
   echo "Failed to start the cache container."
   exit 1
 fi
-
-echo $CACHE_CONTAINER_ID
 
 # Wait for the database to start
 echo "Waiting for the database to start..."
