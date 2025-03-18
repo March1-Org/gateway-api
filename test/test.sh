@@ -9,7 +9,7 @@ else
 fi
 
 # Generate init.sql from the template
-.test/utils/generate-init.sh
+./test/utils/generate-init.sh
 
 # Create Docker volume for PostgreSQL data
 docker volume create postgres_data
