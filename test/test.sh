@@ -54,7 +54,7 @@ for i in {1..30}; do
   sleep 1
 done
 
-docker logs $DB_CONTAINER_ID
+docker ps
 
 # Migrate SQL files from ./drizzle folder
 echo "Migrating SQL files from ./drizzle folder..."
