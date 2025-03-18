@@ -29,7 +29,7 @@ if [ -z "$DB_CONTAINER_ID" ]; then
   exit 1
 fi
 
-
+docker logs $DB_CONTAINER_ID
 
 # Start the Redis container
 CACHE_CONTAINER_ID=$(docker run -d \
