@@ -1,10 +1,10 @@
 import Elysia, { t } from "elysia";
-import type { schemaBodies, DbType } from "./db";
+import type { DbType } from "./db";
 import { insertUser } from "./handlers/insertUser";
 import { selectUser } from "./handlers/selectUser";
 import { updateUser } from "./handlers/updateUser";
 import { deleteUser } from "./handlers/deleteUser";
-import type { Schema } from "./db/schema";
+import type { Schema, SchemaBodies } from "./db/schema";
 import jwt from "@elysiajs/jwt";
 import { checkAuthorization } from "./handlers/checkAuthorization";
 import { selectUsers, selectUsersQuery } from "./handlers/selectUsers";
@@ -12,7 +12,7 @@ import type Redis from "ioredis";
 
 type Options = {
   db: DbType;
-  schemaBodies: schemaBodies;
+  schemaBodies: SchemaBodies;
   schema: Schema;
   cache: Redis;
 };

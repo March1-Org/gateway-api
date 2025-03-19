@@ -11,4 +11,4 @@ export const schemaBodies = {
   update: spreads(schema, "update"),
 };
 
-export type schemaBodies = typeof schemaBodies;
+export type SchemaBodies = typeof schemaBodies;
