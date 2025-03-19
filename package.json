@@ -1,12 +1,12 @@
 {
   "name": "march1-microservice-template",
-  "version": "1.0.53",
+  "version": "1.0.54",
   "main": "dist/index.js",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",
   "type": "module",
   "exports": {
-    "./db/schema": {
+    "./schema": {
       "types": "./dist/db/schema/index.d.ts",
       "import": "./dist/db/schema/index.js"
     }
