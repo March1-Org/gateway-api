@@ -1,6 +1,6 @@
 {
   "name": "march1-microservice-template",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -40,6 +40,6 @@
   "files": [
     "dist/index.d.ts",
     "dist/db/index.js",
-    "./dist/db/schema/**/*"
+    "dist/db/schema/**/*"
   ]
 }
