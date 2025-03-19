@@ -1,6 +1,7 @@
 {
   "name": "march1-microservice-template",
-  "version": "1.0.50",
+  "version": "1.0.51",
+  "main": "dist/index.js",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -32,8 +33,6 @@
     "rimraf": "^6.0.1"
   },
   "files": [
-    "dist/index.d.ts",
-    "dist/db/index.js",
-    "dist/db/schema/**/*.d.ts"
+    "dist/**/*"
   ]
 }
