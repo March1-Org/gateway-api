@@ -1,10 +1,16 @@
 {
   "name": "march1-microservice-template",
-  "version": "1.0.51",
+  "version": "1.0.52",
   "main": "dist/index.js",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",
   "type": "module",
+  "exports": {
+    "./db/schema": {
+      "types": "./dist/db/schema/index.d.ts",
+      "import": "./dist/db/schema/index.js"
+    }
+  },
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "db:generate": "drizzle-kit generate",
@@ -33,6 +39,9 @@
     "rimraf": "^6.0.1"
   },
   "files": [
-    "dist/**/*"
+    "dist/index.d.ts",
+    "dist/db/index.js",
+    "./dist/db/schema/index.d.ts",
+    "./dist/db/schema/index.js"
   ]
 }

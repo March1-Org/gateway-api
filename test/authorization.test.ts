@@ -3,8 +3,7 @@ import { treaty } from "@elysiajs/eden";
 import type { app } from "@/index";
 import { getMockDb } from "./utils/getMockDb";
 import { createApp } from "@/createApp";
-import { dbBodies } from "@/db";
-import { schema } from "@/db/schema";
+import { dbBodies, schema } from "@/db/schema";
 import { getMockCache } from "./utils/getMockCache";
 
 let api: ReturnType<typeof treaty<typeof app>>;

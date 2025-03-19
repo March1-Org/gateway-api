@@ -1,6 +1,4 @@
-import { spreads } from "../utils/spread";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { schema } from "./schema";
 import { Client } from "pg";
 
 const client = new Client({
@@ -15,11 +13,3 @@ await client.connect();
 export const db = drizzle(client);
 
 export type DbType = typeof db;
-
-export const dbBodies = {
-  insert: spreads(schema, "insert"),
-  select: spreads(schema, "select"),
-  update: spreads(schema, "update"),
-};
-
-export type DbBodies = typeof dbBodies;
