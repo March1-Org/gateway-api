@@ -12,7 +12,7 @@
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo",
     "publish:build": "rimraf ./dist && bun run build && bun publish",
-    "test:integrated": "bash ./test/test.sh"
+    "test:integrated": "bash ./test/setup.sh && bun test && bash ./test/teardown.sh"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",

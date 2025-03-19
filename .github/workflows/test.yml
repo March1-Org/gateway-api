@@ -28,11 +28,14 @@ jobs:
           echo "REDIS_DATABASE=0" >> .env
           echo "TEMPLATE_JWT_SECRET=template-jwt-secret" >> .env
 
-      - name: Make test.sh executable
-        run: chmod +x ./test/test.sh
+      - name: Make setup.sh and teardown.sh executable
+        run: chmod +x ./test/setup.sh && chmod +x ./test/teardown.sh
 
       - name: Install Packages
         run: bun install
 
+      - name: Setup tests containers
+        run: bash ./test/setup.sh
+
       - name: Run tests
-        run: bun test:integrated
+        run: bun test

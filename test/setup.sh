@@ -36,6 +36,10 @@ if [ -z "$CACHE_CONTAINER_ID" ]; then
   exit 1
 fi
 
+# Write container IDs to a file
+echo "DB_CONTAINER_ID=$DB_CONTAINER_ID" > container_ids.env
+echo "CACHE_CONTAINER_ID=$CACHE_CONTAINER_ID" >> container_ids.env
+
 # Wait for the database to start
 echo "Waiting for the database to start..."
 for i in {1..30}; do
@@ -45,8 +49,6 @@ for i in {1..30}; do
   fi
   sleep 1
 done
-
-docker ps
 
 # Migrate SQL files from ./drizzle folder
 echo "Migrating SQL files from ./drizzle folder..."
@@ -68,13 +70,13 @@ done
 
 
 # Run tests
-echo "Running tests..."
-export PATH="$HOME/.bun/bin:$PATH" # Ensure Bun is in PATH
-bun test
+# echo "Running tests..."
+# export PATH="$HOME/.bun/bin:$PATH" # Ensure Bun is in PATH
+# bun test
 
 # Stop and remove containers
-echo "Stopping and removing containers..."
-docker stop $DB_CONTAINER_ID
-docker rm $DB_CONTAINER_ID
-docker stop $CACHE_CONTAINER_ID
-docker rm $CACHE_CONTAINER_ID
+# echo "Stopping and removing containers..."
+# docker stop $DB_CONTAINER_ID
+# docker rm $DB_CONTAINER_ID
+# docker stop $CACHE_CONTAINER_ID
+# docker rm $CACHE_CONTAINER_ID
