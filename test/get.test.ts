@@ -3,7 +3,7 @@ import { treaty } from "@elysiajs/eden";
 import type { app } from "@/index";
 import { getMockDb } from "./utils/getMockDb";
 import { createApp } from "@/createApp";
-import { dbBodies, schema } from "@/db/schema";
+import { schemaBodies, schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
 import type { UserRow } from "@/db/schema/users";
 import { getMockCache } from "./utils/getMockCache";
@@ -18,7 +18,7 @@ beforeAll(async () => {
 
   const app = createApp({
     db: mockDb,
-    dbBodies,
+    schemaBodies,
     schema,
     cache: mockCache,
   });

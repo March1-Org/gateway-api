@@ -3,7 +3,7 @@ import { treaty } from "@elysiajs/eden";
 import { describe, it, expect, beforeAll } from "bun:test";
 import { getMockDb } from "./utils/getMockDb";
 import { createApp } from "@/createApp";
-import { dbBodies, schema } from "@/db/schema";
+import { schemaBodies, schema } from "@/db/schema";
 import jwt from "@elysiajs/jwt";
 import { getMockCache } from "./utils/getMockCache";
 
@@ -15,7 +15,7 @@ beforeAll(async () => {
   const mockCache = await getMockCache();
   const app = createApp({
     db: mockDb,
-    dbBodies,
+    schemaBodies,
     schema,
     cache: mockCache,
   });

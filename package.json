@@ -1,6 +1,6 @@
 {
   "name": "march1-microservice-template",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "main": "dist/index.js",
   "module": "src/index.ts",
   "types": "dist/index.d.ts",

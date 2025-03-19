@@ -1,5 +1,5 @@
 import Elysia, { t } from "elysia";
-import type { DbBodies, DbType } from "./db";
+import type { schemaBodies, DbType } from "./db";
 import { insertUser } from "./handlers/insertUser";
 import { selectUser } from "./handlers/selectUser";
 import { updateUser } from "./handlers/updateUser";
@@ -12,15 +12,15 @@ import type Redis from "ioredis";
 
 type Options = {
   db: DbType;
-  dbBodies: DbBodies;
+  schemaBodies: schemaBodies;
   schema: Schema;
   cache: Redis;
 };
 
-export const createApp = ({ db, dbBodies, schema, cache }: Options) => {
+export const createApp = ({ db, schemaBodies, schema, cache }: Options) => {
   return new Elysia()
     .decorate("db", db)
-    .decorate("dbBodies", dbBodies)
+    .decorate("schemaBodies", schemaBodies)
     .decorate("schema", schema)
     .decorate("cache", cache)
     .use(
@@ -38,10 +38,10 @@ export const createApp = ({ db, dbBodies, schema, cache }: Options) => {
     })
     .get("/users/:id", (options) => selectUser(options))
     .post("/users", (options) => insertUser(options), {
-      body: t.Object(dbBodies.insert.usersTable),
+      body: t.Object(schemaBodies.insert.usersTable),
     })
     .patch("/users/:id", (options) => updateUser(options), {
-      body: t.Object(dbBodies.update.usersTable),
+      body: t.Object(schemaBodies.update.usersTable),
     })
     .delete("/users/:id", (options) => deleteUser(options));
 };

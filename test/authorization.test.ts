@@ -3,7 +3,7 @@ import { treaty } from "@elysiajs/eden";
 import type { app } from "@/index";
 import { getMockDb } from "./utils/getMockDb";
 import { createApp } from "@/createApp";
-import { dbBodies, schema } from "@/db/schema";
+import { schemaBodies, schema } from "@/db/schema";
 import { getMockCache } from "./utils/getMockCache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -14,7 +14,7 @@ beforeAll(async () => {
 
   const app = createApp({
     db: mockDb,
-    dbBodies,
+    schemaBodies,
     schema,
     cache: mockCache,
   });

@@ -1,9 +1,9 @@
-import { db, dbBodies } from "./db";
+import { db } from "./db";
 import { createApp } from "./createApp";
-import { schema } from "./db/schema";
+import { schemaBodies, schema } from "./db/schema";
 import { cache } from "./db/cache";
 
-const app = createApp({ db, dbBodies, schema, cache }).listen(3000);
+const app = createApp({ db, schemaBodies, schema, cache }).listen(3000);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`

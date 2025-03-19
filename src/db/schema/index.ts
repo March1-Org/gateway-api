@@ -5,10 +5,10 @@ export const schema = { usersTable };
 
 export type Schema = typeof schema;
 
-export const dbBodies = {
+export const schemaBodies = {
   insert: spreads(schema, "insert"),
   select: spreads(schema, "select"),
   update: spreads(schema, "update"),
 };
 
-export type DbBodies = typeof dbBodies;
+export type schemaBodies = typeof schemaBodies;
