@@ -56,7 +56,7 @@ describe("GET /users/:id", () => {
       },
     });
 
-    expect(res.data).toEqual({ ...user, age: 10 });
+    expect(res.data).toEqual(user);
     expect(res.status).toBe(200);
   });
 });
