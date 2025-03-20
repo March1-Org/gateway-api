@@ -1,6 +1,7 @@
 name: Run Tests on Pull Request
 
 on:
+  push:
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -38,3 +39,6 @@ jobs:
 
       - name: Run tests
         run: bun test
+
+      - name: Teardown tests containers
+        run: bash ./test/teardown.sh
