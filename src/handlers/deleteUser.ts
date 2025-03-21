@@ -1,5 +1,5 @@
-import type { DbType } from "@/db";
-import type { Schema } from "@/db/schema";
+import type { DbType } from "db/index";
+import type { Schema } from "db/schema";
 import { eq } from "drizzle-orm";
 import type Redis from "ioredis";
 

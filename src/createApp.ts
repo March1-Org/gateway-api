@@ -1,14 +1,15 @@
 import Elysia, { t } from "elysia";
-import type { DbType } from "./db";
-import { insertUser } from "./handlers/insertUser";
-import { selectUser } from "./handlers/selectUser";
-import { updateUser } from "./handlers/updateUser";
-import { deleteUser } from "./handlers/deleteUser";
-import type { Schema, SchemaBodies } from "./db/schema";
 import jwt from "@elysiajs/jwt";
-import { checkAuthorization } from "./handlers/checkAuthorization";
-import { selectUsers, selectUsersQuery } from "./handlers/selectUsers";
 import type Redis from "ioredis";
+import { config } from "config";
+import type { DbType } from "db";
+import type { SchemaBodies, Schema } from "db/schema";
+import { checkAuthorization } from "handlers/checkAuthorization";
+import { deleteUser } from "handlers/deleteUser";
+import { insertUser } from "handlers/insertUser";
+import { selectUser } from "handlers/selectUser";
+import { selectUsers, selectUsersQuery } from "handlers/selectUsers";
+import { updateUser } from "handlers/updateUser";
 
 type Options = {
   db: DbType;
@@ -25,8 +26,7 @@ export const createApp = ({ db, schemaBodies, schema, cache }: Options) => {
     .decorate("cache", cache)
     .use(
       jwt({
-        name: "templateJwt",
-        secret: process.env.TEMPLATE_JWT_SECRET!,
+        secret: config.JWT_SECRET!,
       })
     )
     .onBeforeHandle((options) => checkAuthorization(options))

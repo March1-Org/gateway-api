@@ -1,8 +1,8 @@
-import type { DbType } from "@/db";
-import type { Schema } from "@/db/schema";
 import { t } from "elysia";
 import type { Static } from "@sinclair/typebox";
 import type Redis from "ioredis";
+import type { DbType } from "db";
+import type { Schema } from "db/schema";
 
 export const selectUsersQuery = t.Object({
   page: t.Optional(t.Number()),

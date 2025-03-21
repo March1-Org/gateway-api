@@ -1,4 +1,4 @@
-import { spreads } from "@/utils/spread";
+import { spreads } from "utils/spread";
 import { usersTable } from "./users";
 
 export const schema = { usersTable };

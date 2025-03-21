@@ -1,6 +1,6 @@
-import type { DbType } from "@/db";
-import type { Schema } from "@/db/schema";
-import type { UserRow } from "@/db/schema/users";
+import type { DbType } from "db";
+import type { Schema } from "db/schema";
+import type { UserRow } from "db/schema/users";
 import { eq } from "drizzle-orm";
 import { error } from "elysia";
 import type Redis from "ioredis";

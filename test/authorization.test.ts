@@ -1,22 +1,22 @@
 import { describe, it, expect, beforeAll } from "bun:test";
 import { treaty } from "@elysiajs/eden";
-import type { app } from "@/index";
-import { getMockDb } from "./utils/getMockDb";
-import { createApp } from "@/createApp";
-import { schemaBodies, schema } from "@/db/schema";
-import { getMockCache } from "./utils/getMockCache";
+import { createApp } from "createApp";
+import { schemaBodies, schema } from "db/schema";
+import type { app } from "index";
+import { getDb } from "db";
+import { getCache } from "db/cache";
 
 let api: ReturnType<typeof treaty<typeof app>>;
 
 beforeAll(async () => {
-  const mockDb = await getMockDb();
-  const mockCache = await getMockCache();
+  const db = await getDb();
+  const cache = getCache();
 
   const app = createApp({
-    db: mockDb,
+    db,
     schemaBodies,
     schema,
-    cache: mockCache,
+    cache,
   });
 
   api = treaty(app);

@@ -9,32 +9,30 @@ dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 interface Config {
   NODE_ENV: string;
   PORT: number;
-  TEMPLATE_JWT_SECRET: string;
+  JWT_SECRET: string;
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
   POSTGRES_DB: string;
   POSTGRES_PORT: number;
-  DATABASE_URL: string;
+  POSTGRES_HOST: string;
   REDIS_PORT: number;
-  REDIS_URL: string;
+  REDIS_HOST: string;
   REDIS_PASSWORD: string;
-  REDIS_DATABASE: number;
+  REDIS_DB: number;
 }
 
 // Export the configuration
 export const config: Config = {
   NODE_ENV: process.env.NODE_ENV || "development",
   PORT: parseInt(process.env.PORT || "3000"),
-  TEMPLATE_JWT_SECRET: process.env.TEMPLATE_JWT_SECRET || "template-jwt-secret",
-  POSTGRES_USER: process.env.POSTGRES_USER || "template_db_user",
-  POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || "template_db_pass",
-  POSTGRES_DB: process.env.POSTGRES_DB || "template_db",
+  JWT_SECRET: process.env.JWT_SECRET || "jwt-secret",
+  POSTGRES_USER: process.env.POSTGRES_USER || "db_user",
+  POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || "db_password",
+  POSTGRES_DB: process.env.POSTGRES_DB || "db",
   POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT || "5432"),
-  DATABASE_URL:
-    process.env.DATABASE_URL ||
-    "postgres://template_db_user:template_db_pass@localhost:5432/template_db",
+  POSTGRES_HOST: process.env.POSTGRES_HOST || "127.0.0.1",
   REDIS_PORT: parseInt(process.env.REDIS_PORT || "6379"),
-  REDIS_URL: process.env.REDIS_URL || "localhost",
-  REDIS_PASSWORD: process.env.REDIS_PASSWORD || "your_secure_password",
-  REDIS_DATABASE: parseInt(process.env.REDIS_DATABASE || "0"),
+  REDIS_HOST: process.env.REDIS_HOST || "127.0.0.1",
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD || "cache_password",
+  REDIS_DB: parseInt(process.env.REDIS_DB || "0"),
 };

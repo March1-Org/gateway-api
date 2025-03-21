@@ -1,7 +1,10 @@
-import { db } from "./db";
-import { createApp } from "./createApp";
-import { schemaBodies, schema } from "./db/schema";
-import { cache } from "./db/cache";
+import { createApp } from "createApp";
+import { getDb } from "db";
+import { getCache } from "db/cache";
+import { schemaBodies, schema } from "db/schema";
+
+const db = await getDb();
+const cache = getCache();
 
 const app = createApp({ db, schemaBodies, schema, cache }).listen(3000);
 

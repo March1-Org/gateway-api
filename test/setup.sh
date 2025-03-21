@@ -67,16 +67,3 @@ for sql_file in ./drizzle/*.sql; do
     exit 1
   fi
 done
-
-
-# Run tests
-# echo "Running tests..."
-# export PATH="$HOME/.bun/bin:$PATH" # Ensure Bun is in PATH
-# bun test
-
-# Stop and remove containers
-# echo "Stopping and removing containers..."
-# docker stop $DB_CONTAINER_ID
-# docker rm $DB_CONTAINER_ID
-# docker stop $CACHE_CONTAINER_ID
-# docker rm $CACHE_CONTAINER_ID

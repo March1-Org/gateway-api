@@ -1,10 +1,16 @@
 import { defineConfig } from "drizzle-kit";
+import { config } from "config";
 
 export default defineConfig({
   out: "./drizzle",
   schema: "./src/db/schema",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    database: config.POSTGRES_DB,
+    host: config.POSTGRES_HOST,
+    port: config.POSTGRES_PORT,
+    user: config.POSTGRES_USER,
+    password: config.POSTGRES_PASSWORD,
+    ssl: false,
   },
 });

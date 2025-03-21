@@ -1,8 +1,11 @@
 import Redis from "ioredis";
+import { config } from "config";
 
-export const cache = new Redis({
-  port: parseInt(process.env.REDIS_PORT || "6379"),
-  host: process.env.REDIS_URL || "localhost",
-  password: process.env.REDIS_PASSWORD,
-  db: parseInt(process.env.REDIS_DATABASE || "0"),
-});
+export function getCache() {
+  return new Redis({
+    port: config.REDIS_PORT,
+    host: config.REDIS_HOST,
+    password: config.REDIS_PASSWORD,
+    db: config.REDIS_DB,
+  });
+}

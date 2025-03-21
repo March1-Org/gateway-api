@@ -1,6 +1,6 @@
-import type { DbType } from "@/db";
-import type { Schema } from "@/db/schema";
-import type { UserInsert } from "@/db/schema/users";
+import type { DbType } from "db";
+import type { Schema } from "db/schema";
+import type { UserInsert } from "db/schema/users";
 
 type Options = {
   db: DbType;
