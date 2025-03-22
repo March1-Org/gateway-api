@@ -124,6 +124,7 @@ bun run start
   - `NODE_ENV`: The environment mode (development, production, test).
   - `PORT`: The port number that the server will run on.
   - `JWT_SECRET`: The secret key for generating JWT tokens.
+  - `API_PASSWORD`: The password for accessing the API.
   - `POSTGRES_HOST`: The host of the PostgreSQL database.
   - `POSTGRES_PORT`: The port of the PostgreSQL database.
   - `POSTGRES_USER`: The username of the PostgreSQL database.
@@ -159,7 +160,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Elysia](https://elysiajs.com/)
 - [Bun](https://bun.sh/)
 - [Drizzle](https://orm.drizzle.team/)
-
-```
-
-```
