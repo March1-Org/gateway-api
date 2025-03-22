@@ -1,5 +1,6 @@
 import type { JwtType } from "utils/types/jwt";
 import { error } from "elysia";
+import { config } from "config";
 
 type Options = {
   request: Request;
@@ -13,6 +14,16 @@ export async function checkAuthorization({ request, jwt }: Options) {
   }
   const authorized = await jwt.verify(authorization);
   if (!authorized) {
+    return error("Unauthorized");
+  }
+
+  const { apiPassword } = authorized;
+
+  if (!apiPassword) {
+    return error("Unauthorized");
+  }
+
+  if (apiPassword !== config.API_PASSWORD) {
     return error("Unauthorized");
   }
 }

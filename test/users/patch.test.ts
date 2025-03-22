@@ -1,34 +1,22 @@
 import { treaty } from "@elysiajs/eden";
 import { describe, it, expect, beforeAll } from "bun:test";
-import jwt from "@elysiajs/jwt";
 import { eq } from "drizzle-orm";
-import { createApp } from "createApp";
-import { schemaBodies, schema } from "db/schema";
+import { schema } from "db/schema";
 import type { UserRow } from "db/schema/users";
-import { config } from "config";
 import type { app } from "index";
-import { getDb } from "db";
-import { getCache } from "db/cache";
+import type { DbType } from "db";
+import { setup } from "../utils/setup";
 
+let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
 let authorization: string;
 let user: UserRow;
 
 beforeAll(async () => {
-  const db = await getDb();
-  const cache = getCache();
-  const app = createApp({
-    db,
-    schemaBodies,
-    schema,
-    cache,
-  });
-
-  api = treaty(app);
-
-  authorization = await jwt({
-    secret: config.JWT_SECRET,
-  }).decorator.jwt.sign({});
+  const setupVals = await setup();
+  db = setupVals.db;
+  api = setupVals.api;
+  authorization = setupVals.authorization;
 
   await db.delete(schema.usersTable);
   await db.insert(schema.usersTable).values([

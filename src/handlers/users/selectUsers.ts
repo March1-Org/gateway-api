@@ -28,6 +28,7 @@ export async function selectUsers({
   const offset = (page - 1) * limit;
 
   const cachedResult = await cache.get(cacheKey);
+
   if (cachedResult) {
     return JSON.parse(cachedResult);
   }

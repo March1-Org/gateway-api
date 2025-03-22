@@ -1,10 +1,10 @@
 networks:
-  template_network:
+  network:
     external: true
 
 volumes:
-  template_data:
-  template_cache_data:
+  db_data:
+  cache_data:
 
 services:
   app:
@@ -15,14 +15,14 @@ services:
       - "${PORT}:3000"
     environment:
       - NODE_ENV=production
-    container_name: template-app
+    container_name: app
     env_file: ".env"
     networks:
-      - template_network
+      - network
 
   db:
     image: postgres:latest
-    container_name: template-db
+    container_name: db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -30,17 +30,17 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - template_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     networks:
-      - template_network
+      - network
 
   cache:
     image: bitnami/redis:latest
-    container_name: template-cache
+    container_name: cache
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
-      - template_cache_data:/data
+      - cache_data:/data
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_DATABASE=${REDIS_DATABASE}
