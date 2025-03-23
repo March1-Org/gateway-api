@@ -61,6 +61,4 @@ jobs:
         #   registry-url: https://npm.pkg.github.com/
       # - run: npm ci
       - run: bun install
-      - run: bun run publish:build
-        env:
-          NPM_CONFIG_TOKEN: ${{secrets.NPM_CONFIG_TOKEN }}
+      - run: NPM_CONFIG_TOKEN=${{secrets.NPM_CONFIG_TOKEN }} bun publish:build
