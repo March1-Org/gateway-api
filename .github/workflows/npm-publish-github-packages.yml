@@ -49,6 +49,7 @@ jobs:
   publish-gpr:
     needs: test
     runs-on: ubuntu-latest
+    environment: publish
     permissions:
       contents: read
       packages: write
@@ -62,4 +63,4 @@ jobs:
       - run: bun install
       - run: bun run publish:build
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NPM_CONFIG_TOKEN: ${{secrets.NPM_CONFIG_TOKEN }}
