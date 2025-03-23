@@ -49,7 +49,6 @@ jobs:
   publish-gpr:
     needs: test
     runs-on: ubuntu-latest
-    environment: publish
     permissions:
       contents: read
       packages: write
@@ -61,4 +60,6 @@ jobs:
         #   registry-url: https://npm.pkg.github.com/
       # - run: npm ci
       - run: bun install
-      - run: NPM_CONFIG_TOKEN=${{secrets.NPM_CONFIG_TOKEN }} bun publish:build
+      - run: bun run publish:build
+        env:
+          NPM_CONFIG_TOKEN: ${{secrets.NPM_CONFIG_TOKEN }}
