@@ -6,12 +6,12 @@ import { schemaBodies, schema } from "db/schema";
 const db = await getDb();
 const cache = getCache();
 
-const app = createApp({ db, schemaBodies, schema, cache }).listen(3000);
+const gatewayApp = createApp({ db, schemaBodies, schema, cache }).listen(3000);
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 Elysia is running at ${gatewayApp.server?.hostname}:${gatewayApp.server?.port}`
 );
-type App = typeof app;
+type GatewayApp = typeof gatewayApp;
 
-export { app };
-export type { App };
+export { gatewayApp };
+export type { GatewayApp };
