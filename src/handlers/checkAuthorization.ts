@@ -1,6 +1,6 @@
-import type { JwtType } from "utils/types/jwt";
-import { error } from "elysia";
-import { config } from "config";
+import { config } from 'config';
+import { error } from 'elysia';
+import type { JwtType } from 'utils/types/jwt';
 
 type Options = {
   request: Request;
@@ -8,22 +8,22 @@ type Options = {
 };
 
 export async function checkAuthorization({ request, jwt }: Options) {
-  const authorization = request.headers.get("authorization");
+  const authorization = request.headers.get('authorization');
   if (!authorization) {
-    return error("Unauthorized");
+    return error('Unauthorized');
   }
   const authorized = await jwt.verify(authorization);
   if (!authorized) {
-    return error("Unauthorized");
+    return error('Unauthorized');
   }
 
   const { apiPassword } = authorized;
 
   if (!apiPassword) {
-    return error("Unauthorized");
+    return error('Unauthorized');
   }
 
   if (apiPassword !== config.API_PASSWORD) {
-    return error("Unauthorized");
+    return error('Unauthorized');
   }
 }

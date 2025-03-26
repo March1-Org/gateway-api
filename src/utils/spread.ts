@@ -1,27 +1,27 @@
-import { Kind, type TObject } from "@sinclair/typebox";
+import { Kind, type TObject } from '@sinclair/typebox';
+import type { Table } from 'drizzle-orm';
 import {
   type BuildSchema,
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-typebox";
-import type { Table } from "drizzle-orm";
+} from 'drizzle-typebox';
 
 type Spread<
   T extends TObject | Table,
-  Mode extends "select" | "insert" | "update" | undefined,
+  Mode extends 'select' | 'insert' | 'update' | undefined,
 > =
   T extends TObject<infer Fields>
     ? {
         [K in keyof Fields]: Fields[K];
       }
     : T extends Table
-      ? Mode extends "select"
-        ? BuildSchema<"select", T["_"]["columns"], undefined>["properties"]
-        : Mode extends "insert"
-          ? BuildSchema<"insert", T["_"]["columns"], undefined>["properties"]
-          : Mode extends "update"
-            ? BuildSchema<"update", T["_"]["columns"], undefined>["properties"]
+      ? Mode extends 'select'
+        ? BuildSchema<'select', T['_']['columns'], undefined>['properties']
+        : Mode extends 'insert'
+          ? BuildSchema<'insert', T['_']['columns'], undefined>['properties']
+          : Mode extends 'update'
+            ? BuildSchema<'update', T['_']['columns'], undefined>['properties']
             : object
       : object;
 
@@ -30,30 +30,30 @@ type Spread<
  */
 export const spread = <
   T extends TObject | Table,
-  Mode extends "select" | "insert" | "update" | undefined,
+  Mode extends 'select' | 'insert' | 'update' | undefined,
 >(
   schema: T,
-  mode?: Mode,
+  mode?: Mode
 ): Spread<T, Mode> => {
   const newSchema: Record<string, unknown> = {};
   let table;
   switch (mode) {
-    case "insert":
-    case "select":
-    case "update":
+    case 'insert':
+    case 'select':
+    case 'update':
       if (Kind in schema) {
         table = schema;
         break;
       }
       table =
-        mode === "insert"
+        mode === 'insert'
           ? createInsertSchema(schema)
-          : mode === "select"
+          : mode === 'select'
             ? createSelectSchema(schema)
             : createUpdateSchema(schema);
       break;
     default:
-      if (!(Kind in schema)) throw new Error("Expect a schema");
+      if (!(Kind in schema)) throw new Error('Expect a schema');
       table = schema;
   }
   for (const key of Object.keys(table.properties))
@@ -71,10 +71,10 @@ export const spread = <
  */
 export const spreads = <
   T extends Record<string, TObject | Table>,
-  Mode extends "select" | "insert" | "update" | undefined,
+  Mode extends 'select' | 'insert' | 'update' | undefined,
 >(
   models: T,
-  mode?: Mode,
+  mode?: Mode
 ): {
   [K in keyof T]: Spread<T[K], Mode>;
 } => {

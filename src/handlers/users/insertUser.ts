@@ -1,6 +1,6 @@
-import type { DbType } from "db";
-import type { Schema } from "db/schema";
-import type { UserInsert } from "db/schema/users";
+import type { DbType } from 'db';
+import type { Schema } from 'db/schema';
+import type { UserInsert } from 'db/schema/users';
 
 type Options = {
   db: DbType;
@@ -14,5 +14,5 @@ export async function insertUser({
   body,
 }: Options) {
   await db.insert(usersTable).values(body);
-  return "Successfully created user.";
+  return 'Successfully created user.';
 }
