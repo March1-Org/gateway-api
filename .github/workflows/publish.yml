@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: march1/gateway-api
+          repository: march1-org/gateway-api
           token: ${{ secrets.MARCH1_GITHUB_TOKEN }}
           path: gateway-api
 
