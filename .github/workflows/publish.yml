@@ -36,6 +36,8 @@ jobs:
 
       - name: Install Packages
         run: bun install
+        env:
+          MARCH1_GITHUB_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
 
       - name: Setup tests containers
         run: bash ./test/setup.sh
@@ -90,4 +92,5 @@ jobs:
           commit-message: "feat: updated template package"
           path: gateway-api
           delete-branch: true
+          branch: template-package
           title: "Template Package Update"
