@@ -46,7 +46,7 @@ jobs:
       - name: Teardown tests containers
         run: bash ./test/teardown.sh
 
-  publish-gpr:
+  publish:
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -62,4 +62,30 @@ jobs:
       - run: bun install
       - run: bun run publish:build
         env:
-          NPM_CONFIG_TOKEN: ${{secrets.NPM_CONFIG_TOKEN }}
+          NPM_CONFIG_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
+
+  pr-to-gateway-api:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: march1/gateway-api
+          token: ${{ secrets.MARCH1_GITHUB_TOKEN }}
+          path: gateway-api
+
+      - uses: oven-sh/setup-bun@v2
+
+      - working-directory: gateway-api
+        run: bun add @march1-org/microservice-template
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.MARCH1_GITHUB_TOKEN }}
+          commit-message: "feat: updated template package"
+          path: gateway-api
+          branch: template update
+          title: "Template Package Update"
