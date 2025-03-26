@@ -81,6 +81,8 @@ jobs:
 
       - working-directory: gateway-api
         run: bun add @march1-org/microservice-template
+        env:
+          MARCH1_GITHUB_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
 
       - uses: peter-evans/create-pull-request@v7
         with:
