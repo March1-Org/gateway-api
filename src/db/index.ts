@@ -1,6 +1,6 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
-import { config } from "config";
+import { config } from 'config';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Client } from 'pg';
 
 export async function getDb() {
   const client = new Client({

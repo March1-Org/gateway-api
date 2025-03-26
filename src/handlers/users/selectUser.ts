@@ -1,9 +1,9 @@
-import type { DbType } from "db";
-import type { Schema } from "db/schema";
-import type { UserRow } from "db/schema/users";
-import { eq } from "drizzle-orm";
-import { error } from "elysia";
-import type Redis from "ioredis";
+import type { DbType } from 'db';
+import type { Schema } from 'db/schema';
+import type { UserRow } from 'db/schema/users';
+import { eq } from 'drizzle-orm';
+import { error } from 'elysia';
+import type Redis from 'ioredis';
 
 type Options = {
   db: DbType;
@@ -32,12 +32,12 @@ export async function selectUser({
     .where(eq(usersTable.id, Number(id)));
 
   if (!data.length) {
-    return error("Not Found", "User not found.");
+    return error('Not Found', 'User not found.');
   }
 
   const user = data[0];
 
-  await cache.set(cacheKey, JSON.stringify(user), "EX", 3600);
+  await cache.set(cacheKey, JSON.stringify(user), 'EX', 3600);
 
   return user;
 }

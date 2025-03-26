@@ -1,7 +1,7 @@
-import type { DbType } from "db/index";
-import type { Schema } from "db/schema";
-import { eq } from "drizzle-orm";
-import type Redis from "ioredis";
+import type { DbType } from 'db/index';
+import type { Schema } from 'db/schema';
+import { eq } from 'drizzle-orm';
+import type Redis from 'ioredis';
 
 type Options = {
   db: DbType;
@@ -22,5 +22,5 @@ export async function deleteUser({
 
   await cache.del(cacheKey);
 
-  return "Successfully deleted user.";
+  return 'Successfully deleted user.';
 }

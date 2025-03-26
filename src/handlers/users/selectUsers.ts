@@ -1,8 +1,8 @@
-import { t } from "elysia";
-import type { Static } from "@sinclair/typebox";
-import type Redis from "ioredis";
-import type { DbType } from "db";
-import type { Schema } from "db/schema";
+import type { Static } from '@sinclair/typebox';
+import type { DbType } from 'db';
+import type { Schema } from 'db/schema';
+import { t } from 'elysia';
+import type Redis from 'ioredis';
 
 export const selectUsersQuery = t.Object({
   page: t.Optional(t.Number()),
@@ -35,7 +35,7 @@ export async function selectUsers({
 
   const data = await db.select().from(usersTable).limit(limit).offset(offset);
 
-  await cache.set(cacheKey, JSON.stringify(data), "EX", 3600);
+  await cache.set(cacheKey, JSON.stringify(data), 'EX', 3600);
 
   return data;
 }

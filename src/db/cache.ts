@@ -1,5 +1,5 @@
-import Redis from "ioredis";
-import { config } from "config";
+import { config } from 'config';
+import Redis from 'ioredis';
 
 export function getCache() {
   return new Redis({

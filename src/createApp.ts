@@ -1,11 +1,11 @@
-import Elysia from "elysia";
-import jwt from "@elysiajs/jwt";
-import type Redis from "ioredis";
-import { config } from "config";
-import type { DbType } from "db";
-import type { SchemaBodies, Schema } from "db/schema";
-import { checkAuthorization } from "handlers/checkAuthorization";
-import { userRoutes } from "routes/usersRoutes";
+import jwt from '@elysiajs/jwt';
+import { config } from 'config';
+import type { DbType } from 'db';
+import type { Schema, SchemaBodies } from 'db/schema';
+import Elysia from 'elysia';
+import { checkAuthorization } from 'handlers/checkAuthorization';
+import type Redis from 'ioredis';
+import { userRoutes } from 'routes/usersRoutes';
 
 type Options = {
   db: DbType;
@@ -16,15 +16,15 @@ type Options = {
 
 export function createApp({ db, schemaBodies, schema, cache }: Options) {
   return new Elysia()
-    .decorate("db", db)
-    .decorate("schemaBodies", schemaBodies)
-    .decorate("schema", schema)
-    .decorate("cache", cache)
+    .decorate('db', db)
+    .decorate('schemaBodies', schemaBodies)
+    .decorate('schema', schema)
+    .decorate('cache', cache)
     .use(
       jwt({
         secret: config.JWT_SECRET!,
       })
     )
     .onBeforeHandle((options) => checkAuthorization(options))
-    .use(userRoutes({ db, schemaBodies, schema, cache }));
+    .use(userRoutes({ cache, db, schema, schemaBodies }));
 }
