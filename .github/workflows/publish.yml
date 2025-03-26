@@ -64,7 +64,7 @@ jobs:
       - run: bun install
       - run: bun run publish:build
         env:
-          NPM_CONFIG_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
+          MARCH1_GITHUB_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
 
   pr-to-gateway-api:
     needs: publish
