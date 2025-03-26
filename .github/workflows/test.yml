@@ -36,6 +36,9 @@ jobs:
         env:
           MARCH1_GITHUB_TOKEN: ${{ secrets.MARCH1_GITHUB_TOKEN }}
 
+      - name: Check Linting
+        run: bun run lint
+
       - name: Setup tests containers
         run: bash ./test/setup.sh
 

@@ -29,7 +29,9 @@
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo",
     "publish:build": "bun run build:npm && bun publish --registry https://npm.pkg.github.com",
-    "test:integrated": "bash ./test/setup.sh && bun test && bash ./test/teardown.sh"
+    "test:integrated": "bash ./test/setup.sh && bun test && bash ./test/teardown.sh",
+    "lint": "eslint src && prettier src --check --config ./.prettierrc",
+    "prettify": "prettier src --write"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
@@ -42,11 +44,17 @@
     "pg": "^8.13.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
     "@types/bun": "^1.2.4",
     "@types/pg": "^8.11.11",
     "bun-types": "latest",
     "drizzle-kit": "^0.30.5",
-    "rimraf": "^6.0.1"
+    "eslint": "^9.23.0",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^16.0.0",
+    "prettier": "3.5.3",
+    "rimraf": "^6.0.1",
+    "typescript-eslint": "^8.28.0"
   },
   "files": [
     "dist/index.js",
