@@ -88,6 +88,5 @@ jobs:
         with:
           token: ${{ secrets.MARCH1_GITHUB_TOKEN }}
           commit-message: "feat: updated template package"
-          path: gateway-api
           delete-branch: true
           title: "Template Package Update"
