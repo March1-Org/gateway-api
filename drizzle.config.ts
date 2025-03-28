@@ -1,10 +1,10 @@
-import { defineConfig } from "drizzle-kit";
-import { config } from "config";
+import { config } from 'config';
+import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
-  out: "./drizzle",
-  schema: "./src/db/schema",
-  dialect: "postgresql",
+  out: './drizzle',
+  schema: './src/db/schema',
+  dialect: 'postgresql',
   dbCredentials: {
     database: config.POSTGRES_DB,
     host: config.POSTGRES_HOST,

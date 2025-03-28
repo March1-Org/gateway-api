@@ -12,11 +12,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "${PORT}:3000"
+      - '${PORT}:3000'
     environment:
       - NODE_ENV=production
     container_name: app
-    env_file: ".env"
+    env_file: '.env.production'
     networks:
       - network
 
@@ -28,7 +28,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - '${POSTGRES_PORT}:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -38,7 +38,7 @@ services:
     image: bitnami/redis:latest
     container_name: cache
     ports:
-      - "${REDIS_PORT}:6379"
+      - '${REDIS_PORT}:6379'
     volumes:
       - cache_data:/data
     environment:
