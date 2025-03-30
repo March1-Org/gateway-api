@@ -4,21 +4,21 @@ import type { Schema } from 'db/schema';
 import { t } from 'elysia';
 import type Redis from 'ioredis';
 
-export const selectUsersQuery = t.Object({
+export const getUsersQuery = t.Object({
   page: t.Optional(t.Number()),
   limit: t.Optional(t.Number()),
 });
 
-type SelectUsersQueryType = Static<typeof selectUsersQuery>;
+type GetUsersQueryType = Static<typeof getUsersQuery>;
 
 type Options = {
   db: DbType;
   schema: Schema;
-  query: SelectUsersQueryType;
+  query: GetUsersQueryType;
   cache: Redis;
 };
 
-export async function selectUsers({
+export async function getUsers({
   db,
   schema: { usersTable },
   query: { page = 1, limit = 10 },
