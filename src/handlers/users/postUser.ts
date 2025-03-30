@@ -8,11 +8,7 @@ type Options = {
   body: UserInsert;
 };
 
-export async function insertUser({
-  db,
-  schema: { usersTable },
-  body,
-}: Options) {
+export async function postUser({ db, schema: { usersTable }, body }: Options) {
   await db.insert(usersTable).values(body);
   return 'Successfully created user.';
 }

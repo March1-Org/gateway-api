@@ -12,7 +12,7 @@ type Options = {
   cache: Redis;
 };
 
-export async function selectUser({
+export async function getUser({
   db,
   schema: { usersTable },
   params: { id },

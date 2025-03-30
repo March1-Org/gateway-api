@@ -12,7 +12,7 @@ type Options = {
   cache: Redis;
 };
 
-export async function updateUser({
+export async function patchUser({
   db,
   schema: { usersTable },
   params: { id },

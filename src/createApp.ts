@@ -16,10 +16,6 @@ type Options = {
 
 export function createApp({ db, schemaBodies, schema, cache }: Options) {
   return new Elysia()
-    .decorate('db', db)
-    .decorate('schemaBodies', schemaBodies)
-    .decorate('schema', schema)
-    .decorate('cache', cache)
     .use(
       jwt({
         secret: config.JWT_SECRET!,
