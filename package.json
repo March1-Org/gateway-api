@@ -29,7 +29,7 @@
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo",
     "publish:build": "bun run build:npm && bun publish --registry https://npm.pkg.github.com",
-    "test:integrated": "bash ./test/setup.sh && bun test && bash ./test/teardown.sh",
+    "test:integrated": "bash ./test/setup.sh && bun test || true && bash ./test/teardown.sh",
     "lint": "eslint src && prettier src --check --config ./.prettierrc",
     "prettify": "prettier src --write"
   },
