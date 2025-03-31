@@ -1,9 +1,10 @@
-import { treaty } from "@elysiajs/eden";
-import { describe, it, expect, beforeAll } from "bun:test";
-import { schema } from "db/schema";
-import type { app } from "index";
-import type { DbType } from "db";
-import { setup } from "../utils/setup";
+import { treaty } from '@elysiajs/eden';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import type { DbType } from 'db';
+import { schema } from 'db/schema';
+import type { app } from 'index';
+
+import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -15,19 +16,19 @@ beforeAll(async () => {
   api = setupVals.api;
   authorization = setupVals.authorization;
 
-  await db.delete(schema.usersTable);
+  await db.delete(schema.users);
   await db
-    .insert(schema.usersTable)
-    .values([{ age: 30, email: "test@email.com", name: "test" }]);
+    .insert(schema.users)
+    .values([{ age: 30, email: 'test@email.com', name: 'test' }]);
 });
 
-describe("POST /users/", () => {
+describe('POST /users/', () => {
   it('returns "duplicate key value violates unique constraint "users_email_unique"" error', async () => {
     const res = await api.users.post(
       {
         age: 24,
-        email: "test@email.com",
-        name: "Alonzo",
+        email: 'test@email.com',
+        name: 'Alonzo',
       },
       {
         headers: {
@@ -46,8 +47,8 @@ describe("POST /users/", () => {
     const res = await api.users.post(
       {
         age: 24,
-        email: "test2@email.com",
-        name: "Alonzo",
+        email: 'test2@email.com',
+        name: 'Alonzo',
       },
       {
         headers: {
@@ -56,7 +57,7 @@ describe("POST /users/", () => {
       }
     );
 
-    expect(res.data).toBe("Successfully created user.");
+    expect(res.data).toBe('Successfully created user.');
     expect(res.status).toBe(200);
   });
 });

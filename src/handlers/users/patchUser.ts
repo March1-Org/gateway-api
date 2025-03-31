@@ -14,15 +14,15 @@ type Options = {
 
 export async function patchUser({
   db,
-  schema: { usersTable },
+  schema: { users },
   params: { id },
   body,
   cache,
 }: Options) {
   await db
-    .update(usersTable)
+    .update(users)
     .set(body)
-    .where(eq(usersTable.id, Number(id)));
+    .where(eq(users.id, Number(id)));
 
   const cacheKey = `user:${id}`;
 

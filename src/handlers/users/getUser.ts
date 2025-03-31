@@ -14,7 +14,7 @@ type Options = {
 
 export async function getUser({
   db,
-  schema: { usersTable },
+  schema: { users },
   params: { id },
   cache,
 }: Options) {
@@ -28,8 +28,8 @@ export async function getUser({
 
   const data = await db
     .select()
-    .from(usersTable)
-    .where(eq(usersTable.id, Number(id)));
+    .from(users)
+    .where(eq(users.id, Number(id)));
 
   if (!data.length) {
     return error('Not Found', 'User not found.');

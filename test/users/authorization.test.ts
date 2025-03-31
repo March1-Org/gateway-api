@@ -1,9 +1,11 @@
-import { describe, it, expect, beforeAll } from "bun:test";
 import { treaty } from "@elysiajs/eden";
-import type { app } from "index";
-import { setup } from "../utils/setup";
 import jwt from "@elysiajs/jwt";
+import { describe, it, expect, beforeAll } from "bun:test";
 import { config } from "config";
+import type { app } from "index";
+
+import { setup } from "../utils/setup";
+
 
 let api: ReturnType<typeof treaty<typeof app>>;
 

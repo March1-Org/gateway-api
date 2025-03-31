@@ -1,10 +1,11 @@
-import { describe, it, expect, beforeAll } from "bun:test";
-import { treaty } from "@elysiajs/eden";
-import { schema } from "db/schema";
-import type { UserRow } from "db/schema/users";
-import type { app } from "index";
-import type { DbType } from "db";
-import { setup } from "../utils/setup";
+import { treaty } from '@elysiajs/eden';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import type { DbType } from 'db';
+import { schema } from 'db/schema';
+import type { UserRow } from 'db/schema/users';
+import type { app } from 'index';
+
+import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -17,15 +18,15 @@ beforeAll(async () => {
   api = setupVals.api;
   authorization = setupVals.authorization;
 
-  await db.delete(schema.usersTable);
+  await db.delete(schema.users);
   await db
-    .insert(schema.usersTable)
-    .values({ age: 30, email: "test@email.com", name: "test" });
+    .insert(schema.users)
+    .values({ age: 30, email: 'test@email.com', name: 'test' });
 
-  user = (await db.select().from(schema.usersTable))[0];
+  user = (await db.select().from(schema.users))[0];
 });
 
-describe("GET /users/:id", () => {
+describe('GET /users/:id', () => {
   it("returns 'User not found' error when user doesn't exist", async () => {
     const res = await api.users({ id: 999999 }).get({
       headers: {
@@ -33,11 +34,11 @@ describe("GET /users/:id", () => {
       },
     });
 
-    expect(res.error?.value).toBe("User not found.");
+    expect(res.error?.value).toBe('User not found.');
     expect(res.error?.status).toBe(404);
   });
 
-  it("returns user row", async () => {
+  it('returns user row', async () => {
     const res = await api.users({ id: user.id }).get({
       headers: {
         authorization,
@@ -48,7 +49,7 @@ describe("GET /users/:id", () => {
     expect(res.status).toBe(200);
   });
 
-  it("returns user row from cache", async () => {
+  it('returns user row from cache', async () => {
     const res = await api.users({ id: user.id }).get({
       headers: {
         authorization,

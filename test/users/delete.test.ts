@@ -1,10 +1,11 @@
-import { treaty } from "@elysiajs/eden";
-import { describe, it, expect, beforeAll } from "bun:test";
-import type { UserRow } from "db/schema/users";
-import type { DbType } from "db";
-import { schema } from "db/schema";
-import type { app } from "index";
-import { setup } from "../utils/setup";
+import { treaty } from '@elysiajs/eden';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import type { DbType } from 'db';
+import { schema } from 'db/schema';
+import type { UserRow } from 'db/schema/users';
+import type { app } from 'index';
+
+import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -17,15 +18,15 @@ beforeAll(async () => {
   api = setupVals.api;
   authorization = setupVals.authorization;
 
-  await db.delete(schema.usersTable);
+  await db.delete(schema.users);
   await db
-    .insert(schema.usersTable)
-    .values({ age: 30, email: "test@email.com", name: "test" });
+    .insert(schema.users)
+    .values({ age: 30, email: 'test@email.com', name: 'test' });
 
-  user = (await db.select().from(schema.usersTable))[0];
+  user = (await db.select().from(schema.users))[0];
 });
 
-describe("DELETE /users/:id", () => {
+describe('DELETE /users/:id', () => {
   it("returns 'Successfully deleted user.'", async () => {
     const res = await api.users({ id: user.id }).delete(
       {},
@@ -36,7 +37,7 @@ describe("DELETE /users/:id", () => {
       }
     );
 
-    expect(res.data).toBe("Successfully deleted user.");
+    expect(res.data).toBe('Successfully deleted user.');
     expect(res.status).toBe(200);
   });
 });

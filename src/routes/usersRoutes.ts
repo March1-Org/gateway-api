@@ -29,10 +29,10 @@ export async function userRoutes({ db, schemaBodies, schema, cache }: Options) {
     })
     .get('/:id', (options) => getUser(options))
     .post('', (options) => postUser(options), {
-      body: t.Object(schemaBodies.insert.usersTable),
+      body: t.Object(schemaBodies.insert.users),
     })
     .patch('/:id', (options) => patchUser(options), {
-      body: t.Object(schemaBodies.update.usersTable),
+      body: t.Object(schemaBodies.update.users),
     })
     .delete('/:id', (options) => deleteUser(options));
 }
