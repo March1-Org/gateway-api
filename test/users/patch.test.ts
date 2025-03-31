@@ -1,11 +1,12 @@
-import { treaty } from "@elysiajs/eden";
-import { describe, it, expect, beforeAll } from "bun:test";
-import { eq } from "drizzle-orm";
-import { schema } from "db/schema";
-import type { UserRow } from "db/schema/users";
-import type { app } from "index";
-import type { DbType } from "db";
-import { setup } from "../utils/setup";
+import { treaty } from '@elysiajs/eden';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import type { DbType } from 'db';
+import { schema } from 'db/schema';
+import type { UserRow } from 'db/schema/users';
+import { eq } from 'drizzle-orm';
+import type { app } from 'index';
+
+import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -18,27 +19,27 @@ beforeAll(async () => {
   api = setupVals.api;
   authorization = setupVals.authorization;
 
-  await db.delete(schema.usersTable);
-  await db.insert(schema.usersTable).values([
-    { age: 30, email: "test@email.com", name: "test" },
-    { age: 30, email: "test2@email.com", name: "test" },
+  await db.delete(schema.users);
+  await db.insert(schema.users).values([
+    { age: 30, email: 'test@email.com', name: 'test' },
+    { age: 30, email: 'test2@email.com', name: 'test' },
   ]);
 
   user = (
     await db
       .select()
-      .from(schema.usersTable)
-      .where(eq(schema.usersTable.email, "test2@email.com"))
+      .from(schema.users)
+      .where(eq(schema.users.email, 'test2@email.com'))
   )[0];
 });
 
-describe("PATCH /users/:id", () => {
+describe('PATCH /users/:id', () => {
   it('returns "duplicate key value violates unique constraint "users_email_unique"" error', async () => {
     const res = await api.users({ id: user.id }).patch(
       {
         age: 24,
-        email: "test@email.com",
-        name: "Alonzo",
+        email: 'test@email.com',
+        name: 'Alonzo',
       },
       {
         headers: {
@@ -57,8 +58,8 @@ describe("PATCH /users/:id", () => {
     const res = await api.users({ id: user.id }).patch(
       {
         age: 24,
-        email: "test.email@.com",
-        name: "Alonzo",
+        email: 'test.email@.com',
+        name: 'Alonzo',
       },
       {
         headers: {
@@ -67,7 +68,7 @@ describe("PATCH /users/:id", () => {
       }
     );
 
-    expect(res.data).toBe("Successfully updated user.");
+    expect(res.data).toBe('Successfully updated user.');
     expect(res.status).toBe(200);
   });
 });

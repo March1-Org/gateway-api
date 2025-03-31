@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeAll } from "bun:test";
-import { treaty } from "@elysiajs/eden";
-import { schema } from "db/schema";
-import type { app } from "index";
-import type { DbType } from "db";
-import { setup } from "../utils/setup";
+import { treaty } from '@elysiajs/eden';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import type { DbType } from 'db';
+import { schema } from 'db/schema';
+import type { app } from 'index';
+
+import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<typeof app>>;
@@ -15,16 +16,16 @@ beforeAll(async () => {
   api = setupVals.api;
   authorization = setupVals.authorization;
 
-  await db.delete(schema.usersTable);
-  await db.insert(schema.usersTable).values([
-    { age: 30, email: "test@email.com", name: "test" },
-    { age: 30, email: "test2@email.com", name: "test" },
-    { age: 30, email: "test3@email.com", name: "test" },
+  await db.delete(schema.users);
+  await db.insert(schema.users).values([
+    { age: 30, email: 'test@email.com', name: 'test' },
+    { age: 30, email: 'test2@email.com', name: 'test' },
+    { age: 30, email: 'test3@email.com', name: 'test' },
   ]);
 });
 
-describe("GET /users", () => {
-  it("returns an array of user rows", async () => {
+describe('GET /users', () => {
+  it('returns an array of user rows', async () => {
     const res = await api.users.get({
       query: {},
       headers: {
@@ -36,7 +37,7 @@ describe("GET /users", () => {
     expect(res.status).toBe(200);
   });
 
-  it("returns an array of user rows from cache", async () => {
+  it('returns an array of user rows from cache', async () => {
     const res = await api.users.get({
       query: {},
       headers: {

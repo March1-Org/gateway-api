@@ -2,7 +2,7 @@ import { spreads } from 'utils/spread';
 
 import { usersTable } from './users';
 
-export const schema = { usersTable };
+export const schema = { users: usersTable };
 
 export type Schema = typeof schema;
 

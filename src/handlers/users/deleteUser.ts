@@ -12,11 +12,11 @@ type Options = {
 
 export async function deleteUser({
   db,
-  schema: { usersTable },
+  schema: { users },
   params: { id },
   cache,
 }: Options) {
-  await db.delete(usersTable).where(eq(usersTable.id, Number(id)));
+  await db.delete(users).where(eq(users.id, Number(id)));
 
   const cacheKey = `user:${id}`;
 

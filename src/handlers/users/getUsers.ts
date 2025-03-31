@@ -20,7 +20,7 @@ type Options = {
 
 export async function getUsers({
   db,
-  schema: { usersTable },
+  schema: { users },
   query: { page = 1, limit = 10 },
   cache,
 }: Options) {
@@ -33,7 +33,7 @@ export async function getUsers({
     return JSON.parse(cachedResult);
   }
 
-  const data = await db.select().from(usersTable).limit(limit).offset(offset);
+  const data = await db.select().from(users).limit(limit).offset(offset);
 
   await cache.set(cacheKey, JSON.stringify(data), 'EX', 3600);
 
