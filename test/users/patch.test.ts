@@ -1,10 +1,10 @@
 import { treaty } from '@elysiajs/eden';
+import { schema } from '@march1-org/db-template';
+import type { UserRow } from '@march1-org/db-template/users';
 import { describe, it, expect, beforeAll } from 'bun:test';
-import type { DbType } from 'db';
-import { schema } from 'db/schema';
-import type { UserRow } from 'db/schema/users';
 import { eq } from 'drizzle-orm';
 import type { app } from 'index';
+import type { DbType } from 'lib/db';
 
 import { setup } from '../utils/setup';
 

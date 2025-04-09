@@ -1,8 +1,8 @@
+import type { Schema } from '@march1-org/db-template';
 import type { Static } from '@sinclair/typebox';
-import type { DbType } from 'db';
-import type { Schema } from 'db/schema';
 import { t } from 'elysia';
 import type Redis from 'ioredis';
+import type { DbType } from 'lib/db';
 
 export const getUsersQuery = t.Object({
   page: t.Optional(t.Number()),

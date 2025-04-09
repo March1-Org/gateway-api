@@ -1,8 +1,8 @@
 import { treaty } from '@elysiajs/eden';
+import { schema } from '@march1-org/db-template';
 import { describe, it, expect, beforeAll } from 'bun:test';
-import type { DbType } from 'db';
-import { schema } from 'db/schema';
 import type { app } from 'index';
+import type { DbType } from 'lib/db';
 
 import { setup } from '../utils/setup';
 

@@ -1,7 +1,7 @@
+import { schema, schemaBodies } from '@march1-org/db-template';
 import { createApp } from 'createApp';
-import { getDb } from 'db';
-import { getCache } from 'db/cache';
-import { schema, schemaBodies } from 'db/schema';
+import { getCache } from 'lib/cache';
+import { getDb } from 'lib/db';
 
 const db = await getDb();
 const cache = getCache();

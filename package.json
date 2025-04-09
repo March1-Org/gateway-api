@@ -36,6 +36,7 @@
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
+    "@march1-org/db-template": "^1.0.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
     "drizzle-typebox": "^0.3.0",
