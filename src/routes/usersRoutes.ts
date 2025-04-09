@@ -1,5 +1,4 @@
-import type { DbType } from 'db';
-import type { Schema, SchemaBodies } from 'db/schema';
+import type { Schema, SchemaBodies } from '@march1-org/db-template';
 import Elysia, { t } from 'elysia';
 import { deleteUser } from 'handlers/users/deleteUser';
 import { getUser } from 'handlers/users/getUser';
@@ -7,6 +6,7 @@ import { getUsers, getUsersQuery } from 'handlers/users/getUsers';
 import { patchUser } from 'handlers/users/patchUser';
 import { postUser } from 'handlers/users/postUser';
 import type Redis from 'ioredis';
+import type { DbType } from 'lib/db';
 
 type Options = {
   db: DbType;

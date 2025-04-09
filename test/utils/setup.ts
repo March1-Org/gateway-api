@@ -1,10 +1,10 @@
-import { treaty } from "@elysiajs/eden";
-import jwt from "@elysiajs/jwt";
-import { config } from "config";
-import { createApp } from "createApp";
-import { getDb } from "db";
-import { getCache } from "db/cache";
-import { schemaBodies, schema } from "db/schema";
+import { treaty } from '@elysiajs/eden';
+import jwt from '@elysiajs/jwt';
+import { schemaBodies, schema } from '@march1-org/db-template';
+import { config } from 'config';
+import { createApp } from 'createApp';
+import { getCache } from 'lib/cache';
+import { getDb } from 'lib/db';
 
 export async function setup() {
   const db = await getDb();

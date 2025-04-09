@@ -1,7 +1,7 @@
-import type { DbType } from 'db/index';
-import type { Schema } from 'db/schema';
+import type { Schema } from '@march1-org/db-template';
 import { eq } from 'drizzle-orm';
 import type Redis from 'ioredis';
+import type { DbType } from 'lib/db';
 
 type Options = {
   db: DbType;

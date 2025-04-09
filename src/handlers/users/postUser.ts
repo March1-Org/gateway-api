@@ -1,6 +1,6 @@
-import type { DbType } from 'db';
-import type { Schema } from 'db/schema';
-import type { UserInsert } from 'db/schema/users';
+import type { Schema } from '@march1-org/db-template';
+import type { UserInsert } from '@march1-org/db-template/users';
+import type { DbType } from 'lib/db';
 
 type Options = {
   db: DbType;
