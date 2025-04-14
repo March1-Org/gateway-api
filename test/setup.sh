@@ -14,10 +14,11 @@ if ! command -v bun &> /dev/null; then
   exit 1
 fi
 
+bun install
 
 # Load environment variables
-if [ -f .env.testing ]; then
-  source .env.testing
+if [ -f .env.test.local ]; then
+  source .env.test.local
 else
   echo "Error: .env.testing file not found."
   exit 1

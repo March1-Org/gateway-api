@@ -46,3 +46,5 @@ package-lock.json
 /dist
 
 container_ids.env
+
+.secrets

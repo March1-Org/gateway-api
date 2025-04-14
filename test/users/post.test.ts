@@ -1,6 +1,8 @@
 import { treaty } from '@elysiajs/eden';
+import { faker } from '@faker-js/faker';
 import { schema } from '@march1-org/db-template';
-import { describe, it, expect, beforeAll } from 'bun:test';
+import { describe, it, expect, beforeAll, beforeEach } from 'bun:test';
+import { eq } from 'drizzle-orm';
 import type { app } from 'index';
 import type { DbType } from 'lib/db';
 
@@ -15,20 +17,28 @@ beforeAll(async () => {
   db = setupVals.db;
   api = setupVals.api;
   authorization = setupVals.authorization;
+});
 
+beforeEach(async () => {
   await db.delete(schema.users);
-  await db
-    .insert(schema.users)
-    .values([{ age: 30, email: 'test@email.com', name: 'test' }]);
 });
 
 describe('POST /users/', () => {
-  it('returns "duplicate key value violates unique constraint "users_email_unique"" error', async () => {
+  it('should return error when email violates unique constraint', async () => {
+    // Create test user with known email
+    const existingEmail = faker.internet.email();
+    await db.insert(schema.users).values({
+      age: 30,
+      email: existingEmail,
+      name: 'Existing User',
+    });
+
+    // Attempt to create user with duplicate email
     const res = await api.users.post(
       {
         age: 24,
-        email: 'test@email.com',
-        name: 'Alonzo',
+        email: existingEmail,
+        name: 'Duplicate Email User',
       },
       {
         headers: {
@@ -37,27 +47,35 @@ describe('POST /users/', () => {
       }
     );
 
-    expect(res.error?.value as unknown as string).toBe(
-      'duplicate key value violates unique constraint "users_email_unique"'
+    expect(res.error?.value).toBe(
+      `Key (email)=(${existingEmail}) already exists.`
     );
-    expect(res.error?.status as unknown as number).toBe(500);
+    expect(res.error?.status).toBe(400);
   });
 
-  it("returns 'Successfully created user.'", async () => {
-    const res = await api.users.post(
-      {
-        age: 24,
-        email: 'test2@email.com',
-        name: 'Alonzo',
+  it('should successfully create user with valid data', async () => {
+    const userData = {
+      age: 24,
+      email: faker.internet.email(),
+      name: 'New User',
+    };
+
+    // Create new user
+    const res = await api.users.post(userData, {
+      headers: {
+        authorization,
       },
-      {
-        headers: {
-          authorization,
-        },
-      }
-    );
+    });
 
     expect(res.data).toBe('Successfully created user.');
     expect(res.status).toBe(200);
+
+    // Verify user was created in database
+    const [createdUser] = await db
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.email, userData.email));
+
+    expect(createdUser).toMatchObject(userData);
   });
 });
