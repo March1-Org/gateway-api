@@ -48,3 +48,6 @@ package-lock.json
 container_ids.env
 
 .secrets
+
+zig/.zig-cache/*
+zig/zig-out/*
