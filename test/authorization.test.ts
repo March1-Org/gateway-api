@@ -1,11 +1,10 @@
-import { treaty } from "@elysiajs/eden";
-import jwt from "@elysiajs/jwt";
-import { describe, it, expect, beforeAll } from "bun:test";
-import { config } from "config";
-import type { app } from "index";
+import { treaty } from '@elysiajs/eden';
+import jwt from '@elysiajs/jwt';
+import { describe, it, expect, beforeAll } from 'bun:test';
+import { config } from 'config';
+import type { app } from 'index';
 
-import { setup } from "../utils/setup";
-
+import { setup } from './utils/setup';
 
 let api: ReturnType<typeof treaty<typeof app>>;
 
@@ -14,11 +13,11 @@ beforeAll(async () => {
   api = setupVals.api;
 });
 
-describe("Authorization Checks", () => {
+describe('Authorization Checks', () => {
   it("returns 'Unauthorized' when provided the no authorization header", async () => {
     const res = await api.users.get({ query: {} });
 
-    expect(res.error?.value as string).toBe("Unauthorized");
+    expect(res.error?.value as string).toBe('Unauthorized');
     expect(res.error?.status as number).toBe(401);
   });
 
@@ -26,11 +25,11 @@ describe("Authorization Checks", () => {
     const res = await api.users.get({
       query: {},
       headers: {
-        authorization: "",
+        authorization: '',
       },
     });
 
-    expect(res.error?.value as string).toBe("Unauthorized");
+    expect(res.error?.value as string).toBe('Unauthorized');
     expect(res.error?.status as number).toBe(401);
   });
 
@@ -46,14 +45,14 @@ describe("Authorization Checks", () => {
       },
     });
 
-    expect(res.error?.value as string).toBe("Unauthorized");
+    expect(res.error?.value as string).toBe('Unauthorized');
     expect(res.error?.status as number).toBe(401);
   });
 
   it("returns 'Unauthorized' when provided the wrong api password", async () => {
     const authorization = await jwt({
       secret: config.JWT_SECRET,
-    }).decorator.jwt.sign({ apiPassword: "123" });
+    }).decorator.jwt.sign({ apiPassword: '123' });
 
     const res = await api.users.get({
       query: {},
@@ -62,7 +61,7 @@ describe("Authorization Checks", () => {
       },
     });
 
-    expect(res.error?.value as string).toBe("Unauthorized");
+    expect(res.error?.value as string).toBe('Unauthorized');
     expect(res.error?.status as number).toBe(401);
   });
 });
