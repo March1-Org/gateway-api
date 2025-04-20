@@ -9,7 +9,6 @@
         "@march1-org/db-template": "latest",
         "dotenv": "^16.4.7",
         "drizzle-orm": "^0.40.0",
-        "drizzle-typebox": "^0.3.0",
         "elysia": "^1.2.25",
         "ioredis": "^5.6.0",
         "pg": "^8.13.3",

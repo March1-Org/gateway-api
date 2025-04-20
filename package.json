@@ -15,9 +15,6 @@
   },
   "scripts": {
     "start": "bun run ./src/index.ts",
-    "dev": "docker compose up -d db cache && bun run db:migrate && bun run --watch src/index.ts",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
     "build:npm": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo",
@@ -32,7 +29,6 @@
     "@march1-org/db-template": "latest",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
-    "drizzle-typebox": "^0.3.0",
     "elysia": "^1.2.25",
     "ioredis": "^5.6.0",
     "pg": "^8.13.3"
