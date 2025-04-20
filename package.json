@@ -11,13 +11,6 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "./schema": {
-      "types": "./dist/db/schema/index.d.ts",
-      "import": "./dist/db/schema/index.js"
-    },
-    "./users": {
-      "types": "./dist/db/schema/users.d.ts"
     }
   },
   "scripts": {
@@ -61,7 +54,6 @@
   "files": [
     "dist/index.js",
     "dist/index.d.ts",
-    "dist/db/index.js",
-    "dist/db/schema/**/*"
+    "dist/db/index.js"
   ]
 }
