@@ -1,5 +1,5 @@
 {
-  "name": "@march1-org/microservice-template",
+  "name": "@march1-org/gateway-api",
   "publishConfig": {
     "@march1-org:registry": "https://npm.pkg.github.com"
   },
