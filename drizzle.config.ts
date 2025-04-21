@@ -2,7 +2,7 @@ import { config } from 'config';
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
-  schema: ['./node_modules/@march1-org/db-template/dist/index.js'],
+  schema: ['./node_modules/@march1-org/auth-db/dist/index.js'],
   dialect: 'postgresql',
   dbCredentials: {
     database: config.POSTGRES_DB,
