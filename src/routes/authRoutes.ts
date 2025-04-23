@@ -2,10 +2,12 @@ import jwt from '@elysiajs/jwt';
 import { config } from 'config';
 import Elysia from 'elysia';
 import { sendOTP, sendOTPBody } from 'handlers/auth/sendOTP';
+import { verifyOTP, verifyOTPBody } from 'handlers/auth/verifyOTP';
 import type Redis from 'ioredis';
 import type { authApi, mockAuthApi } from 'lib/apis/auth';
 import { deriveIp } from 'utils/deriveIp';
 import { sendOTPRateLimit } from 'utils/rateLimit/auth/sendOTP';
+import { verifyOTPRateLimit } from 'utils/rateLimit/auth/verifyOTP';
 
 type Options = {
   authApp: typeof authApi | typeof mockAuthApi;
@@ -27,5 +29,10 @@ export async function authRoutes({ authApp, cache }: Options) {
       '/sendOTP',
       (options) => sendOTP({ ...options, rateLimit: sendOTPRateLimit }),
       { body: sendOTPBody }
+    )
+    .post(
+      '/verifyOTP',
+      (options) => verifyOTP({ ...options, rateLimit: verifyOTPRateLimit }),
+      { body: verifyOTPBody }
     );
 }
