@@ -6,7 +6,7 @@
       "dependencies": {
         "@elysiajs/eden": "^1.2.0",
         "@elysiajs/jwt": "^1.2.0",
-        "@march1-org/auth-api": "^1.0.2",
+        "@march1-org/auth-api": "^1.0.5",
         "@march1-org/db-template": "latest",
         "dotenv": "^16.4.7",
         "drizzle-orm": "^0.40.0",
@@ -127,7 +127,7 @@
 
     "@levischuck/tiny-cbor": ["@levischuck/tiny-cbor@0.2.11", "", {}, "sha512-llBRm4dT4Z89aRsm6u2oEZ8tfwL/2l6BwpZ7JcyieouniDECM5AqNgr/y08zalEIvW3RSK4upYyybDcmjXqAow=="],
 
-    "@march1-org/auth-api": ["@march1-org/auth-api@1.0.2", "https://npm.pkg.github.com/download/@march1-org/auth-api/1.0.2/a2867b5ffb7f8050307186ec97bad67685f6bf51", { "dependencies": { "@elysiajs/eden": "^1.2.0", "@elysiajs/jwt": "^1.2.0", "@march1-org/auth-db": "^1.0.1", "awesome-phonenumber": "^7.4.0", "better-auth": "1.1.18", "dotenv": "^16.4.7", "drizzle-orm": "^0.40.0", "drizzle-typebox": "^0.3.0", "elysia": "^1.2.24", "ioredis": "^5.6.0", "pg": "^8.13.3", "twilio": "^5.5.1" } }, "sha512-ZPn16krv4+i3bWguAT0d1+ny1G+CI4doJDaio6m26YsaHdmDJX/pEM0GBXQEppVqlAzU01x/mUjghmf1C8Eekw=="],
+    "@march1-org/auth-api": ["@march1-org/auth-api@1.0.5", "https://npm.pkg.github.com/download/@march1-org/auth-api/1.0.5/4cab541aa9f3344f45a647ba70be8ae1f3e2ee69", { "dependencies": { "@elysiajs/eden": "^1.2.0", "@elysiajs/jwt": "^1.2.0", "@march1-org/auth-db": "^1.0.1", "awesome-phonenumber": "^7.4.0", "better-auth": "1.1.18", "dotenv": "^16.4.7", "drizzle-orm": "^0.40.0", "drizzle-typebox": "^0.3.0", "elysia": "^1.2.24", "pg": "^8.13.3", "twilio": "^5.5.1" } }, "sha512-b/5mRADUadne2KFsUKqlAW7lSs6+McsePfukXKbOgknFssDMSFChnSNQiYQGRaFgDLjqw/65rncT8iPOc22qOg=="],
 
     "@march1-org/auth-db": ["@march1-org/auth-db@1.0.1", "https://npm.pkg.github.com/download/@march1-org/auth-db/1.0.1/f92f3f15c1974c116b90360eedec4376cec72536", { "dependencies": { "dotenv": "^16.4.7", "drizzle-orm": "^0.40.0", "drizzle-typebox": "^0.3.0", "pg": "^8.14.1" }, "peerDependencies": { "typescript": "^5" } }, "sha512-yGYydrLzkoxYzZPZYX5XfqDp+lY8x6bsApxZDux53dIsswr529kl7z/W0qzIxa2ZifbOW7KaDlCwcv6qc52p5w=="],
 
