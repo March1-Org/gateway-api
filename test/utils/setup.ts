@@ -1,29 +1,16 @@
 import { treaty } from '@elysiajs/eden';
 import jwt from '@elysiajs/jwt';
-import {
-  Auth,
-  createAuthApp,
-  getAuth,
-  validatePhoneNumber,
-} from '@march1-org/auth-api';
 import { config } from 'config';
 import { createApp } from 'createApp';
+import { mockAuthApi } from 'lib/apis/auth';
 import { getCache } from 'lib/cache';
 import { getDb } from 'lib/db';
 
-import { mockSendOTP } from './mockSendOTP';
-
 export async function setup() {
-  const db = await getDb();
+  const db = await getDb(config);
   const cache = getCache();
-  const authInstance = getAuth({ sendOTP: mockSendOTP, db });
-  const auth = new Auth(authInstance.api, validatePhoneNumber);
-  const authApp = createAuthApp({
-    auth,
-    config,
-  });
   const app = createApp({
-    authApp,
+    authApp: mockAuthApi,
     cache,
   });
 

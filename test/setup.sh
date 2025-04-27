@@ -17,8 +17,8 @@ fi
 bun install
 
 # Load environment variables
-if [ -f .env.test.local ]; then
-  source .env.test.local
+if [ -f .env.testing ]; then
+  source .env.testing
 else
   echo "Error: .env.testing file not found."
   exit 1

@@ -7,7 +7,7 @@ const envFile = `.env.${process.env.NODE_ENV || 'development'}`;
 dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 
 // Define the configuration interface
-interface Config {
+export interface Config {
   NODE_ENV: string;
   PORT: number;
   JWT_SECRET: string;
