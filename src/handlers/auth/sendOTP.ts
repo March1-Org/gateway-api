@@ -12,7 +12,6 @@ type Options = {
   authApp: typeof authApi | typeof mockAuthApi;
   body: typeof sendOTPBody.static;
   jwtAuth: JwtType;
-  ip: string;
   rateLimit: AuthRateLimit;
   cache: Redis;
 };
@@ -21,11 +20,10 @@ export async function sendOTP({
   authApp,
   body: { phoneNumber },
   jwtAuth,
-  ip,
   rateLimit,
   cache,
 }: Options) {
-  const limitReached = await rateLimit({ cache, ip, phoneNumber });
+  const limitReached = await rateLimit({ cache, phoneNumber });
   if (limitReached) return limitReached;
   const token = await jwtAuth.sign({ phoneNumber });
   const { data, error: err } = await authApp.auth.sendOTP.post({

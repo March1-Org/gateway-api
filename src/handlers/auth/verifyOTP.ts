@@ -13,7 +13,6 @@ type Options = {
   authApp: typeof authApi | typeof mockAuthApi;
   body: typeof verifyOTPBody.static;
   jwtAuth: JwtType;
-  ip: string;
   rateLimit: AuthRateLimit;
   cache: Redis;
 };
@@ -22,11 +21,10 @@ export async function verifyOTP({
   authApp,
   body: { phoneNumber, code },
   jwtAuth,
-  ip,
   rateLimit,
   cache,
 }: Options) {
-  const limitReached = await rateLimit({ cache, ip, phoneNumber });
+  const limitReached = await rateLimit({ cache, phoneNumber });
   if (limitReached) return limitReached;
   const token = await jwtAuth.sign({ phoneNumber, code });
   const { data, error: err } = await authApp.auth.verifyOTP.post({
