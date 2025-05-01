@@ -1,4 +1,5 @@
 import { treaty } from '@elysiajs/eden';
+import jwt from '@elysiajs/jwt';
 import {
   Auth,
   createAuthApp,
@@ -18,4 +19,11 @@ const authApp = createAuthApp({
   auth,
   config,
 });
-export const mockAuthApi = treaty(authApp);
+
+const authAuthorization = await jwt({
+  secret: config.JWT_AUTH_SECRET,
+}).decorator.jwt.sign({ apiPassword: config.AUTH_API_PASSWORD });
+
+export const mockAuthApi = treaty(authApp, {
+  headers: { authorization: authAuthorization },
+});

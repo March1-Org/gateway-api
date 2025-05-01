@@ -8,13 +8,11 @@ import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<ReturnType<typeof createApp>>>;
-let authorization: string;
 
 beforeAll(async () => {
   const setupVals = await setup();
   db = setupVals.db;
   api = setupVals.api;
-  authorization = setupVals.authorization;
 
   await db.delete(authSchema.users);
   await db.delete(authSchema.sessions);
@@ -23,11 +21,7 @@ beforeAll(async () => {
   const body = {
     phoneNumber: '+12345678910',
   };
-  await api.auth.sendOTP.post(body, {
-    headers: {
-      authorization,
-    },
-  });
+  await api.auth.sendOTP.post(body);
 });
 
 describe('GET /auth/verifyOTP', () => {
@@ -89,11 +83,7 @@ describe('GET /auth/verifyOTP', () => {
       phoneNumber: '1',
       code: '1',
     };
-    const res = await api.auth.verifyOTP.post(body, {
-      headers: {
-        authorization,
-      },
-    });
+    const res = await api.auth.verifyOTP.post(body);
 
     expect(res.error?.value).toEqual({
       name: 'BetterCallAPIError',
@@ -113,11 +103,7 @@ describe('GET /auth/verifyOTP', () => {
       phoneNumber: verification.identifier,
       code: verification.value,
     };
-    const res = await api.auth.verifyOTP.post(body, {
-      headers: {
-        authorization,
-      },
-    });
+    const res = await api.auth.verifyOTP.post(body);
 
     expect(res.status).toEqual(200);
     expect(res.data).toBeString();

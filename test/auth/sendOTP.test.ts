@@ -8,13 +8,11 @@ import { setup } from '../utils/setup';
 
 let db: DbType;
 let api: ReturnType<typeof treaty<ReturnType<typeof createApp>>>;
-let authorization: string;
 
 beforeAll(async () => {
   const setupVals = await setup();
   db = setupVals.db;
   api = setupVals.api;
-  authorization = setupVals.authorization;
 
   await db.delete(authSchema.users);
   await db.delete(authSchema.sessions);
@@ -51,11 +49,7 @@ describe('GET /auth/sendOTP', () => {
     const body = {
       phoneNumber: '2345678910',
     };
-    const res = await api.auth.sendOTP.post(body, {
-      headers: {
-        authorization,
-      },
-    });
+    const res = await api.auth.sendOTP.post(body);
 
     expect(res.error?.value).toEqual('Invalid Phone Number');
     expect(res.error?.status).toEqual(400);
@@ -65,11 +59,7 @@ describe('GET /auth/sendOTP', () => {
     const body = {
       phoneNumber: '+12505550199',
     };
-    const res = await api.auth.sendOTP.post(body, {
-      headers: {
-        authorization,
-      },
-    });
+    const res = await api.auth.sendOTP.post(body);
 
     expect(res.error?.value).toEqual('Invalid Phone Number');
     expect(res.error?.status).toEqual(400);
@@ -79,11 +69,7 @@ describe('GET /auth/sendOTP', () => {
     const body = {
       phoneNumber: '+12345678910',
     };
-    const res = await api.auth.sendOTP.post(body, {
-      headers: {
-        authorization,
-      },
-    });
+    const res = await api.auth.sendOTP.post(body);
 
     expect(res.data).toBe('Code sent');
     expect(res.status).toEqual(200);
