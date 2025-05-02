@@ -25,59 +25,6 @@ beforeAll(async () => {
 });
 
 describe('GET /auth/verifyOTP', () => {
-  //   it('Should throw unauthorized', async () => {
-  //     const body = { token: '1' };
-  //     const res = await api.auth.verifyOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-  //     expect(res.error?.value).toEqual('Unauthorized');
-  //     expect(res.error?.status).toEqual(401);
-  //   });
-
-  //   it('Should throw missing phone number', async () => {
-  //     const body = {
-  //       token: await jwtInstance.sign({ code: '1' }),
-  //     };
-  //     const res = await api.auth.verifyOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-
-  //     expect(res.error?.value).toEqual('Missing Phone Number');
-  //     expect(res.error?.status).toEqual(400);
-  //   });
-
-  //   it('Should throw missing phone number', async () => {
-  //     const body = {
-  //       token: await jwtInstance.sign({ code: '1' }),
-  //     };
-  //     const res = await api.auth.verifyOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-
-  //     expect(res.error?.value).toEqual('Missing Phone Number');
-  //     expect(res.error?.status).toEqual(400);
-  //   });
-
-  //   it('Should throw missing phone number', async () => {
-  //     const body = {
-  //       token: await jwtInstance.sign({ phoneNumber: '1' }),
-  //     };
-  //     const res = await api.auth.verifyOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-
-  //     expect(res.error?.value).toEqual('Missing Code');
-  //     expect(res.error?.status).toEqual(400);
-  //   });
-
   it('Should catch a failed request', async () => {
     const body = {
       phoneNumber: '1',

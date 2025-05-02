@@ -20,31 +20,6 @@ beforeAll(async () => {
 });
 
 describe('GET /auth/sendOTP', () => {
-  //   it('Should throw unauthorized', async () => {
-  //     const body = {  };
-  //     const res = await api.auth.sendOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-  //     expect(res.error?.value).toEqual('Unauthorized');
-  //     expect(res.error?.status).toEqual(401);
-  //   });
-
-  //   it('Should throw missing phone number', async () => {
-  //     const body = {
-  //       token: await jwtInstance.sign({}),
-  //     };
-  //     const res = await api.auth.sendOTP.post(body, {
-  //       headers: {
-  //         authorization,
-  //       },
-  //     });
-
-  //     expect(res.error?.value).toEqual('Missing Phone Number');
-  //     expect(res.error?.status).toEqual(400);
-  //   });
-
   it('Should throw invalid phone number', async () => {
     const body = {
       phoneNumber: '2345678910',
