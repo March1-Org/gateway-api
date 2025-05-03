@@ -21,7 +21,7 @@ export async function authRoutes({ authApp, cache }: Options) {
       // .derive((options) => deriveIp(options))
       .use(
         jwt({
-          secret: config.JWT_AUTH_SECRET!,
+          secret: config.JWT_AUTH_SECRET,
           name: 'jwtAuth',
         })
       )
